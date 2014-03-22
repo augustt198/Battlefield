@@ -1,0 +1,16 @@
+<guns>
+    <gun name="F2000" type="primary">
+        <firerate>1000</firerate>
+        <bullets>31</bullets>
+        <magazines>4</magazines>
+        <material>ARROW</material>
+        <accuracy>0.9</accuracy>
+    </gun>
+    <gun name="M9" type="secondary">
+        <firerate>500</firerate>
+        <bullets>10</bullets>
+        <magazines>4</magazines>
+        <material>BLAZE_ROD</material>
+        <accuracy>0.6</accuracy>
+    </gun>
+</guns>

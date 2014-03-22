@@ -1,0 +1,13 @@
+package me.august.bf4.guns;
+
+public class GunRounds {
+
+	private int magazines;
+	private int bullets;
+
+	public GunRounds(int magazines, int bullets) {
+		this.magazines = magazines;
+		this.bullets = bullets;
+	}
+
+}

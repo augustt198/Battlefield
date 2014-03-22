@@ -33,6 +33,11 @@
             <version>0.5-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
     </dependencies>
     <build>
 
@@ -60,6 +65,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>com.sk89q:command-framework-bukkit</include>
+                                    <include>dom4j:dom4j</include>
                                 </includes>
                             </artifactSet>
                         </configuration>
