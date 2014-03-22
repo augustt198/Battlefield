@@ -10,4 +10,12 @@ public class GunRounds {
 		this.bullets = bullets;
 	}
 
+	public int getMagazines() {
+		return magazines;
+	}
+
+	public int getBullets() {
+		return bullets;
+	}
+
 }
