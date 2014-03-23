@@ -2,7 +2,9 @@ package me.august.battlefield.util;
 
 import me.august.battlefield.exception.ParsingException;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.util.Vector;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
@@ -32,6 +34,20 @@ public class ParsingUtils {
 		} catch(NumberFormatException e) {
 			throw new ParsingException("Cannot coerce into integer: " + number);
 		}
+	}
+
+	public static ChatColor parseColor(String color) throws ParsingException {
+		try {
+			return ChatColor.valueOf(color.toUpperCase().replace(" ", "_"));
+		} catch(IllegalArgumentException e) {
+			throw new ParsingException("ChatColor not found: " + color);
+		}
+	}
+
+	public static Vector parseVector(String vector) throws ParsingException {
+		String[] coords = vector.replace(" ", "").split(",");
+		if(coords.length != 3) throw new ParsingException("Vector must consist of 3 coordinates");
+		return new Vector(parseDouble(coords[0]), parseDouble(coords[1]), parseDouble(coords[2]));
 	}
 
 	public static void validateAttributes(Element e, String... attributes) throws ParsingException {

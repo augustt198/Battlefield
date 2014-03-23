@@ -10,8 +10,8 @@
     </gun>
 
     <gun name="M9" type="secondary">
-        <firerate>500</firerate>
-        <bullets>10</bullets>
+        <firerate>400</firerate>
+        <bullets>15</bullets>
         <magazines>4</magazines>
         <material>BLAZE_ROD</material>
         <accuracy>0.6</accuracy>

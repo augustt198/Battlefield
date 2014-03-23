@@ -2,6 +2,7 @@ package me.august.battlefield.game;
 
 import me.august.battlefield.player.BattlefieldPlayer;
 import me.august.battlefield.team.BattlefieldTeam;
+import org.bukkit.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +10,25 @@ import java.util.Random;
 
 public class Match {
 
+	private World world;
 	private BattlefieldMap map;
 	private List<BattlefieldTeam> teams;
 	private List<BattlefieldPlayer> players;
 
-	public Match(BattlefieldMap map) {
+	public Match(BattlefieldMap map, World world) {
 		this.map = map;
+		this.world = world;
 
 		teams = new ArrayList<>();
 		players = new ArrayList<>();
+	}
+
+	public void addTeam(BattlefieldTeam team) {
+		teams.add(team);
+	}
+
+	public World getWorld() {
+		return world;
 	}
 
 	public BattlefieldMap getMap() {

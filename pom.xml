@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.august</groupId>
-    <artifactId>bf4</artifactId>
+    <artifactId>battlefield</artifactId>
     <version>0.1</version>
-    <name>BF4</name>
-    <description>BF4 gamemode in Minecraft</description>
+    <name>Battlefield</name>
+    <description>Battlefield in Minecraft</description>
 
     <repositories>
         <repository>

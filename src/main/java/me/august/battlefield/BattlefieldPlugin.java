@@ -2,6 +2,7 @@ package me.august.battlefield;
 
 import me.august.battlefield.exception.ParsingException;
 import me.august.battlefield.game.Match;
+import me.august.battlefield.game.MatchLoader;
 import me.august.battlefield.game.RotationManager;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.GunFactory;
@@ -33,7 +34,6 @@ public class BattlefieldPlugin extends JavaPlugin {
 		instance = this;
 
 		// TODO: supply map instance
-		currentMatch = new Match(null);
 		availableItems = new ArrayList<>();
 
 		Document xml = null;
@@ -83,7 +83,15 @@ public class BattlefieldPlugin extends JavaPlugin {
 		for(String s : rotationManager.getMapNames()) {
 			Log.info(s);
 		}
-	
+
+		Log.info("Loading match: " + rotationManager.getCurrent());
+		try {
+			currentMatch = MatchLoader.load(rotationManager.getCurrent());
+		} catch(Exception e) {
+			Log.warning("Failed to load map: " + rotationManager.getCurrent());
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
