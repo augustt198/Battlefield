@@ -31,4 +31,14 @@ public class Gun extends KitItem {
 		return item;
 	}
 
+	@Override
+	public String toString() {
+		return "Gun{" +
+				"gunType=" + type.name() + ", " +
+				"fireRate=" + String.valueOf(fireRate) + ", " +
+				"accuracy=" + String.valueOf(accuracy) + ", " +
+				"name=" + name +
+				"}";
+	}
+
 }
