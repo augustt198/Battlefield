@@ -2,17 +2,21 @@ package me.august.battlefield;
 
 import me.august.battlefield.exception.ParsingException;
 import me.august.battlefield.game.Match;
+import me.august.battlefield.game.RotationManager;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.GunFactory;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +26,7 @@ public class BattlefieldPlugin extends JavaPlugin {
 
 	private Match currentMatch;
 	private List<KitItem> availableItems;
+	private RotationManager rotationManager;
 
 	@Override
 	public void onEnable() {
@@ -55,11 +60,52 @@ public class BattlefieldPlugin extends JavaPlugin {
 
 		Log.info(String.valueOf(availableItems.size()) + " guns have been loaded");
 
+		if(!getDataFolder().exists()) {
+			getDataFolder().mkdirs();
+		}
+
+		if(!checkDataFile("config.yml") || !checkDataFile("rotation.yml")) {
+			Log.warning("Please restart the server with values in configuration files");
+			disable();
+			return;
+		}
+
+		YamlConfiguration rotationYaml = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "rotation.yml"));
+		if(rotationYaml.get("rotation") == null || rotationYaml.getStringList("rotation").size() < 1) {
+			Log.warning("Please add values to the rotation.yml file");
+			disable();
+			return;
+		}
+
+		rotationManager = new RotationManager(rotationYaml.getStringList("rotation"));
+
+		Log.info("Maps in rotation:");
+		for(String s : rotationManager.getMapNames()) {
+			Log.info(s);
+		}
+	
 	}
 
 	@Override
 	public void onDisable() {
 
+	}
+
+	private boolean checkDataFile(String name) {
+		File file = new File(getDataFolder(), name);
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch(IOException e) {
+				Log.warning("Failed to create file in data folder: " + name);
+			}
+			return false;
+		}
+		return true;
+	}
+
+	private void disable() {
+		getPluginLoader().disablePlugin(this);
 	}
 
 	public static BattlefieldPlugin get() {

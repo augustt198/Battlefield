@@ -1,4 +1,4 @@
-package me.august.battlefield.guns.seeking;
+package me.august.battlefield.guns.projectile;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;

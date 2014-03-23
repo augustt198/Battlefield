@@ -12,20 +12,22 @@ public class Log {
 
 	private static Logger logger = Bukkit.getLogger();
 
+	private static String PREFIX = "[Battlefield] ";
+
 	public static void info(String msg) {
-		logger.info(msg);
+		logger.info(PREFIX + msg);
 	}
 
 	public static void warning(String msg) {
-		logger.warning(msg);
+		logger.warning(PREFIX + msg);
 	}
 
 	public static void severe(String msg) {
-		logger.severe(msg);
+		logger.severe(PREFIX + msg);
 	}
 
 	public static void log(Level level, String msg) {
-		logger.log(level, msg);
+		logger.log(level, PREFIX + msg);
 	}
 
 }
