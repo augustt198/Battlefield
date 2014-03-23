@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class Kit {
 
-	private BF4Class type;
+	private BattlefieldClass type;
 	private Map<GunType, KitItem> loadout;
 
-	public Kit(BF4Class type) {
+	public Kit(BattlefieldClass type) {
 		this.type = type;
 		loadout = new HashMap<>();
 	}
@@ -32,7 +32,7 @@ public class Kit {
 		loadout.put(GunType.SECONDARY_GADGET, item);
 	}
 
-	public BF4Class getType() {
+	public BattlefieldClass getType() {
 		return type;
 	}
 

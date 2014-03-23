@@ -1,11 +1,12 @@
 package me.august.bf4;
 
 import me.august.bf4.game.Match;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class BF4Plugin extends JavaPlugin {
+public class BattlefieldPlugin extends JavaPlugin {
 
-	private static BF4Plugin instance;
+	private static BattlefieldPlugin instance;
 
 	private Match currentMatch;
 
@@ -22,7 +23,7 @@ public class BF4Plugin extends JavaPlugin {
 
 	}
 
-	public static BF4Plugin get() {
+	public static BattlefieldPlugin get() {
 		return instance;
 	}
 

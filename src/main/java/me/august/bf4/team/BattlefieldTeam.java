@@ -2,17 +2,17 @@ package me.august.bf4.team;
 
 import org.bukkit.ChatColor;
 
-public class BF4Team {
+public class BattlefieldTeam {
 
 	private String name;
 	private ChatColor color;
 	private int maxPlayers;
 
-	public BF4Team(String name, ChatColor color) {
+	public BattlefieldTeam(String name, ChatColor color) {
 		this(name, color, 32);
 	}
 
-	public BF4Team(String name, ChatColor color, int maxPlayers) {
+	public BattlefieldTeam(String name, ChatColor color, int maxPlayers) {
 		this.name = name;
 		this.color = color;
 		this.maxPlayers = maxPlayers;
