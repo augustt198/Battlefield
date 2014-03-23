@@ -31,6 +31,14 @@ public class BattlefieldPlayer {
 		battlefieldClass = BattlefieldClass.ASSAULT;
 	}
 
+	public void setBattlefieldClass(BattlefieldClass battlefieldClass) {
+		this.battlefieldClass = battlefieldClass;
+	}
+
+	public void setTeam(BattlefieldTeam team) {
+		this.team = team;
+	}
+
 	public BattlefieldTeam getTeam() {
 		return team;
 	}

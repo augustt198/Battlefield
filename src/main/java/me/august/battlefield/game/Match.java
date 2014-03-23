@@ -5,15 +5,23 @@ import me.august.battlefield.team.BattlefieldTeam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Match {
 
+	private BattlefieldMap map;
 	private List<BattlefieldTeam> teams;
 	private List<BattlefieldPlayer> players;
 
-	public Match() {
+	public Match(BattlefieldMap map) {
+		this.map = map;
+
 		teams = new ArrayList<>();
 		players = new ArrayList<>();
+	}
+
+	public BattlefieldMap getMap() {
+		return map;
 	}
 
 	public List<BattlefieldTeam> getTeams() {
@@ -22,6 +30,20 @@ public class Match {
 
 	public List<BattlefieldPlayer> getPlayers() {
 		return players;
+	}
+
+	public void joinRandomTeam(BattlefieldPlayer player) {
+		int lowest = teams.get(0).getMaxPlayers();
+		for(BattlefieldTeam team : teams) {
+			int count = team.getPlayerCount();
+			if(count > lowest) lowest = count;
+		}
+		List<BattlefieldTeam> joinable = new ArrayList<>();
+		for(BattlefieldTeam team : teams) {
+			if(team.getPlayerCount() == lowest) joinable.add(team);
+		}
+		BattlefieldTeam join = joinable.get(new Random().nextInt(joinable.size()));
+		join.addPlayer(player);
 	}
 
 }
