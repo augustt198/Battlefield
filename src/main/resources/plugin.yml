@@ -1,0 +1,5 @@
+name: BF4
+version: 1.0
+author: August198
+description: Battlefield 4 in Minecraft!
+main: me.august.bf4.BF4Plugin
