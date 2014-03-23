@@ -1,6 +1,5 @@
 <guns>
 
-
 	<gun name="F2000" type="primary">
         <firerate>850</firerate>
         <bullets>31</bullets>
@@ -18,6 +17,5 @@
         <accuracy>0.6</accuracy>
 		<maxdamage>2</maxdamage>
     </gun>
-
 
 </guns>
