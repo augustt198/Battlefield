@@ -1,12 +1,12 @@
-package me.august.bf4;
+package me.august.battlefield;
 
-import me.august.bf4.exception.ParsingException;
-import me.august.bf4.game.Match;
-import me.august.bf4.guns.Gun;
-import me.august.bf4.guns.GunFactory;
-import me.august.bf4.guns.KitItem;
-import me.august.bf4.util.Log;
-import me.august.bf4.util.XMLUtils;
+import me.august.battlefield.exception.ParsingException;
+import me.august.battlefield.game.Match;
+import me.august.battlefield.guns.Gun;
+import me.august.battlefield.guns.GunFactory;
+import me.august.battlefield.guns.KitItem;
+import me.august.battlefield.util.Log;
+import me.august.battlefield.util.XMLUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

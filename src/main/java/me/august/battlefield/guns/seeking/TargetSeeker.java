@@ -1,4 +1,4 @@
-package me.august.bf4.guns.seeking;
+package me.august.battlefield.guns.seeking;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.Plugin;

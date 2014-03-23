@@ -1,7 +1,7 @@
-package me.august.bf4.game;
+package me.august.battlefield.game;
 
-import me.august.bf4.player.BattlefieldPlayer;
-import me.august.bf4.team.BattlefieldTeam;
+import me.august.battlefield.player.BattlefieldPlayer;
+import me.august.battlefield.team.BattlefieldTeam;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package me.august.bf4.guns;
+package me.august.battlefield.guns;
 
 public class GunRounds {
 

@@ -1,4 +1,4 @@
-package me.august.bf4.exception;
+package me.august.battlefield.exception;
 
 public class ParsingException extends Exception {
 

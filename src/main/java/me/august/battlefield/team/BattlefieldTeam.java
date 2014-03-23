@@ -1,4 +1,4 @@
-package me.august.bf4.team;
+package me.august.battlefield.team;
 
 import org.bukkit.ChatColor;
 

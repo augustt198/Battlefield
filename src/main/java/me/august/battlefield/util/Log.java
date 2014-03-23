@@ -1,4 +1,4 @@
-package me.august.bf4.util;
+package me.august.battlefield.util;
 
 import org.bukkit.Bukkit;
 

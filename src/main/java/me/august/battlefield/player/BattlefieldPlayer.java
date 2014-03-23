@@ -1,7 +1,8 @@
-package me.august.bf4.player;
+package me.august.battlefield.player;
 
-import me.august.bf4.BattlefieldPlugin;
-import me.august.bf4.team.BattlefieldTeam;
+import me.august.battlefield.BattlefieldPlugin;
+import me.august.battlefield.guns.BattlefieldClass;
+import me.august.battlefield.team.BattlefieldTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,14 +23,20 @@ public class BattlefieldPlayer {
 	}
 
 	private WeakReference<Player> player;
+	private BattlefieldClass battlefieldClass;
 	private BattlefieldTeam team;
 
 	public BattlefieldPlayer(Player player) {
 		this.player = new WeakReference<>(player);
+		battlefieldClass = BattlefieldClass.ASSAULT;
 	}
 
 	public BattlefieldTeam getTeam() {
 		return team;
+	}
+
+	public BattlefieldClass getBattlefieldClass() {
+		return battlefieldClass;
 	}
 
 	public Player getPlayer() {

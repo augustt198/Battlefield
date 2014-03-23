@@ -1,4 +1,4 @@
-main: me.august.bf4.BattlefieldPlugin
+main: me.august.battlefield.BattlefieldPlugin
 name: BF4
 version: 1.0
 author: August198

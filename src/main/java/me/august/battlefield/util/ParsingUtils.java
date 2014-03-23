@@ -1,6 +1,6 @@
-package me.august.bf4.util;
+package me.august.battlefield.util;
 
-import me.august.bf4.exception.ParsingException;
+import me.august.battlefield.exception.ParsingException;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Material;
 import org.dom4j.Element;
