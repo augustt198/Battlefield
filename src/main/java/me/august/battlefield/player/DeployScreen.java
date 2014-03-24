@@ -1,21 +1,24 @@
 package me.august.battlefield.player;
 
 import me.august.battlefield.BattlefieldPlugin;
-import me.august.battlefield.guns.BattlefieldClass;
+import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.util.ItemAction;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -54,7 +57,10 @@ public class DeployScreen {
 		List<ItemAction> classViewers = new ArrayList<>();
 		for(final BattlefieldClass bfClass : BattlefieldClass.values()) {
 			if(bfClass == BattlefieldClass.ALL) continue;
-			classViewers.add(new ItemAction(new ItemStack(Material.STONE), new Runnable() {
+
+			ItemStack item = getItem(bfClass);
+
+			classViewers.add(new ItemAction(item, new Runnable() {
 				@Override
 				public void run() {
 					showClass(bfClass);
@@ -79,6 +85,44 @@ public class DeployScreen {
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
 			screen.setItem(i, classGuns.get(i).toItem());
 		}
+	}
+
+	private ItemStack getItem(BattlefieldClass bfClass) {
+		Material material = Material.ARROW;
+		switch(bfClass) {
+
+			case ASSAULT:
+				material = Material.DIAMOND_SWORD;
+				break;
+			case ENGINEER:
+				material = Material.ANVIL;
+				break;
+			case SUPPORT:
+				material = Material.CHEST;
+				break;
+			case RECON:
+				material = Material.BOW;
+				break;
+
+
+		}
+		ItemStack item = new ItemStack(material);
+		ItemMeta meta = item.getItemMeta();
+
+		meta.setDisplayName(ChatColor.GOLD + StringUtils.capitalize(bfClass.name()));
+		List<String> guns = new ArrayList<>();
+		for(KitItem kitItem : BattlefieldPlugin.get().getAvailableItems()) {
+			if(kitItem instanceof Gun && kitItem.getBattlefieldClass() == bfClass) {
+				guns.add(kitItem.getName());
+			}
+		}
+		meta.setLore(Arrays.asList("Guns: " + String.valueOf(guns.size())));
+
+		for(String gun : guns) meta.getLore().add(gun);
+
+		item.setItemMeta(meta);
+
+		return item;
 	}
 
 	public BattlefieldPlayer getPlayer() {

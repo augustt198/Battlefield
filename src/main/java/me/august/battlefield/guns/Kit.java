@@ -1,5 +1,6 @@
 package me.august.battlefield.guns;
 
+import me.august.battlefield.BattlefieldClass;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 

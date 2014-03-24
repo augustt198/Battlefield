@@ -1,4 +1,4 @@
-package me.august.battlefield.guns;
+package me.august.battlefield;
 
 public enum BattlefieldClass {
 

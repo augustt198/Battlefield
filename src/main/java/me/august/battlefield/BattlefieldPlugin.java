@@ -34,7 +34,6 @@ public class BattlefieldPlugin extends JavaPlugin {
 	public void onEnable() {
 		instance = this;
 
-		// TODO: supply map instance
 		availableItems = new ArrayList<>();
 
 		Document xml = null;

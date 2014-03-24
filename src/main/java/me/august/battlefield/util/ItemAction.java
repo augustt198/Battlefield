@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class ItemAction implements Listener {
 
-	List<InventoryAction> actions;
-	ItemStack item;
-	Runnable run;
+	private List<InventoryAction> actions;
+	private ItemStack item;
+	private Runnable run;
 
 	public ItemAction(ItemStack item, Runnable run, InventoryAction... actions) {
 		this.item = item;
@@ -44,4 +44,5 @@ public class ItemAction implements Listener {
 	public Runnable getRunnable() {
 		return run;
 	}
+
 }
