@@ -10,6 +10,7 @@ import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -116,12 +117,24 @@ public class BattlefieldPlugin extends JavaPlugin {
 		getPluginLoader().disablePlugin(this);
 	}
 
+	public List<KitItem> getAvailableItems() {
+		return availableItems;
+	}
+
+	public RotationManager getRotationManager() {
+		return rotationManager;
+	}
+
 	public static BattlefieldPlugin get() {
 		return instance;
 	}
 
 	public static Match getCurrentMatch() {
 		return get().currentMatch;
+	}
+
+	public static void registerListener(Listener listener) {
+		get().getServer().getPluginManager().registerEvents(listener, get());
 	}
 
 }

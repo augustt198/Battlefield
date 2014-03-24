@@ -2,10 +2,15 @@ package me.august.battlefield.player;
 
 import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.guns.BattlefieldClass;
+import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.team.BattlefieldTeam;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.ref.WeakReference;
 
@@ -49,6 +54,10 @@ public class BattlefieldPlayer {
 
 	public Player getPlayer() {
 		return player.get();
+	}
+
+	public void launchDeployScreen(int wait /* Wait until deploy */) {
+		new DeployScreen(this, wait);
 	}
 
 	/* Aliases */
