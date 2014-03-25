@@ -13,7 +13,7 @@ public class GunFactory {
 		validateElements(element, "firerate", "bullets", "magazines", "material", "maxdamage");
 
 		if(ItemType.get(element.attributeValue("type")) == null) throw new ParsingException("Type cannot be found" +
-				element.attributeValue("tyoe"));
+				element.attributeValue("type"));
 
 
 		BattlefieldClass gunClass = BattlefieldClass.ALL;

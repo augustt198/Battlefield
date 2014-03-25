@@ -2,6 +2,8 @@ package me.august.battlefield.team;
 
 import me.august.battlefield.game.Match;
 import me.august.battlefield.player.BattlefieldPlayer;
+import me.august.battlefield.player.DeployScreen;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.util.Vector;
 
@@ -70,6 +72,7 @@ public class BattlefieldTeam {
 	public void addPlayer(BattlefieldPlayer player) {
 		player.sendMessage(ChatColor.AQUA + "You have joined " + getName());
 		player.setTeam(this);
+		player.launchDeployScreen(2);
 	}
 
 }

@@ -1,6 +1,7 @@
 <guns>
 
 	<gun name="F2000" type="primary">
+		<kit>assault</kit>
         <firerate>850</firerate>
         <bullets>31</bullets>
         <magazines>4</magazines>

@@ -41,7 +41,8 @@ public class Gun extends KitItem {
 				"fireRate=" + String.valueOf(fireRate) + ", " +
 				"accuracy=" + String.valueOf(accuracy) + ", " +
 				"maxDamage=" + String.valueOf(maxDamage) + ", " +
-				"name=" + name +
+				"name=" + name + ", " +
+				"bfClass=" + battlefieldClass.name() +
 				"}";
 	}
 

@@ -5,6 +5,7 @@ import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.util.ItemAction;
+import me.august.battlefield.util.Log;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -49,7 +50,13 @@ public class DeployScreen {
 		/* Give player blindness */
 		player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, true));
 
-		openScreen();
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				openScreen();
+			}
+		}.runTaskLater(BattlefieldPlugin.get(), 1);
+
 
 	}
 
@@ -70,6 +77,8 @@ public class DeployScreen {
 		for(int i = 0; i < classViewers.size(); i++) {
 			screen.setItem(i, classViewers.get(i).getItem());
 		}
+
+		player.getPlayer().openInventory(screen);
 
 	}
 
@@ -104,12 +113,11 @@ public class DeployScreen {
 				material = Material.BOW;
 				break;
 
-
 		}
 		ItemStack item = new ItemStack(material);
 		ItemMeta meta = item.getItemMeta();
 
-		meta.setDisplayName(ChatColor.GOLD + StringUtils.capitalize(bfClass.name()));
+		meta.setDisplayName(ChatColor.GOLD + StringUtils.capitalize(bfClass.name().toLowerCase()));
 		List<String> guns = new ArrayList<>();
 		for(KitItem kitItem : BattlefieldPlugin.get().getAvailableItems()) {
 			if(kitItem instanceof Gun && kitItem.getBattlefieldClass() == bfClass) {
@@ -118,7 +126,12 @@ public class DeployScreen {
 		}
 		meta.setLore(Arrays.asList("Guns: " + String.valueOf(guns.size())));
 
-		for(String gun : guns) meta.getLore().add(gun);
+
+		for(String gun : guns) {
+			List<String> lore = meta.getLore();
+			lore.add(gun);
+			meta.setLore(lore);
+		}
 
 		item.setItemMeta(meta);
 
@@ -131,6 +144,10 @@ public class DeployScreen {
 
 	public int getWait() {
 		return wait;
+	}
+
+	public Inventory getScreen() {
+		return screen;
 	}
 
 	private void setCanDeploy(boolean canDeploy) {
