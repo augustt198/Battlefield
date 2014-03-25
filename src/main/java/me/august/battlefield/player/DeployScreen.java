@@ -42,9 +42,19 @@ public class DeployScreen {
 			public void run() {
 				setCanDeploy(true);
 			}
-		}.runTaskLater(BattlefieldPlugin.get(), wait);
+		}.runTaskLater(BattlefieldPlugin.get(), wait * 20);
 
 		screen = Bukkit.createInventory(player.getPlayer(), 45, ChatColor.BOLD + "Deploy");
+
+
+		ItemStack deployItem = createDeployItem();
+		screen.setItem(44, deployItem);
+		new ItemClickAction(deployItem, new Runnable() {
+			@Override
+			public void run() {
+				attemptDeploy();
+			}
+		}, true, InventoryAction.PICKUP_ALL);
 
 		/* Give player blindness */
 		player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, true));
@@ -139,6 +149,23 @@ public class DeployScreen {
 		item.setItemMeta(meta);
 
 		return item;
+	}
+
+	public ItemStack createDeployItem() {
+		ItemStack item = new ItemStack(Material.NETHER_STAR);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName("" + ChatColor.AQUA + ChatColor.BOLD + "Deploy");
+		item.setItemMeta(meta);
+		return item;
+	}
+
+	public void attemptDeploy() {
+		if(canDeploy) {
+			player.sendMessage(ChatColor.RED + "You cannot deploy yet!");
+		} else {
+			player.sendMessage(ChatColor.GREEN + "Deploying");
+			//TODO add deployments
+		}
 	}
 
 	public BattlefieldPlayer getPlayer() {

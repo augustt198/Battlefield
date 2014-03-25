@@ -10,6 +10,16 @@
 		<maxdamage>5</maxdamage>
     </gun>
 
+	<gun name="SV98" type="primary">
+		<kit>recon</kit>
+		<firerate>49</firerate>
+		<bullets>11</bullets>
+		<magazines>4</magazines>
+		<material>ARROW</material>
+		<accuracy>0.98</accuracy>
+		<maxdamage>12</maxdamage>
+	</gun>
+
     <gun name="M9" type="secondary">
         <firerate>400</firerate>
         <bullets>15</bullets>
