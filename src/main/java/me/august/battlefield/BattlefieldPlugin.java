@@ -143,4 +143,8 @@ public class BattlefieldPlugin extends JavaPlugin {
 		get().getServer().getPluginManager().registerEvents(listener, get());
 	}
 
+	public static Document loadFromResources(String fileName) throws Exception {
+		return new SAXReader().read(get().getClassLoader().getResourceAsStream(fileName));
+	}
+
 }

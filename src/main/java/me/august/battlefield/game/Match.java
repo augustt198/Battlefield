@@ -47,7 +47,7 @@ public class Match {
 		int lowest = teams.get(0).getMaxPlayers();
 		for(BattlefieldTeam team : teams) {
 			int count = team.getPlayerCount();
-			if(count > lowest) lowest = count;
+			if(count < lowest) lowest = count;
 		}
 		List<BattlefieldTeam> joinable = new ArrayList<>();
 		for(BattlefieldTeam team : teams) {
