@@ -7,6 +7,7 @@ import me.august.battlefield.game.RotationManager;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.GunFactory;
 import me.august.battlefield.guns.KitItem;
+import me.august.battlefield.listener.ConnectionListener;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -92,11 +93,17 @@ public class BattlefieldPlugin extends JavaPlugin {
 			e.printStackTrace();
 		}
 
+		registerListeners();
+
 	}
 
 	@Override
 	public void onDisable() {
 
+	}
+
+	private void registerListeners() {
+		registerListener(new ConnectionListener());
 	}
 
 	private boolean checkDataFile(String name) {

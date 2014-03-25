@@ -22,6 +22,7 @@ public class BattlefieldPlayer {
 		return get(Bukkit.getPlayer(name));
 	}
 
+
 	private WeakReference<Player> player;
 	private BattlefieldClass battlefieldClass;
 	private BattlefieldTeam team;
@@ -29,6 +30,10 @@ public class BattlefieldPlayer {
 	public BattlefieldPlayer(Player player) {
 		this.player = new WeakReference<>(player);
 		battlefieldClass = BattlefieldClass.ASSAULT;
+	}
+
+	public void remove() {
+		BattlefieldPlugin.getCurrentMatch().getPlayers().remove(this);
 	}
 
 	public void setBattlefieldClass(BattlefieldClass battlefieldClass) {
