@@ -4,8 +4,7 @@ import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
-import me.august.battlefield.util.ItemAction;
-import me.august.battlefield.util.Log;
+import me.august.battlefield.util.ItemClickAction;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -61,18 +60,18 @@ public class DeployScreen {
 	}
 
 	public void openScreen() {
-		List<ItemAction> classViewers = new ArrayList<>();
+		List<ItemClickAction> classViewers = new ArrayList<>();
 		for(final BattlefieldClass bfClass : BattlefieldClass.values()) {
 			if(bfClass == BattlefieldClass.ALL) continue;
 
 			ItemStack item = getItem(bfClass);
 
-			classViewers.add(new ItemAction(item, new Runnable() {
+			classViewers.add(new ItemClickAction(item, new Runnable() {
 				@Override
 				public void run() {
 					showClass(bfClass);
 				}
-			}, InventoryAction.PICKUP_ALL));
+			}, true, InventoryAction.PICKUP_ALL));
 		}
 		for(int i = 0; i < classViewers.size(); i++) {
 			screen.setItem(i, classViewers.get(i).getItem());
@@ -82,6 +81,7 @@ public class DeployScreen {
 
 	}
 
+	@SuppressWarnings("deprecated")
 	public void showClass(BattlefieldClass bfClass) {
 		viewingClass = bfClass;
 		List<Gun> classGuns = new ArrayList<>();
@@ -92,8 +92,11 @@ public class DeployScreen {
 			}
 		}
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
-			screen.setItem(i, classGuns.get(i).toItem());
+			screen.setItem(i, classGuns.get(i - 9).toItem());
 		}
+
+		player.getPlayer().updateInventory();
+
 	}
 
 	private ItemStack getItem(BattlefieldClass bfClass) {

@@ -13,16 +13,22 @@ import java.util.List;
 /**
  * Created by August on 3/24/14.
  */
-public class ItemAction implements Listener {
+public class ItemClickAction implements Listener {
 
 	private List<InventoryAction> actions;
 	private ItemStack item;
 	private Runnable run;
+	private boolean cancel;
 
-	public ItemAction(ItemStack item, Runnable run, InventoryAction... actions) {
+	public ItemClickAction(ItemStack item, Runnable run, InventoryAction... actions) {
+		this(item, run, false, actions);
+	}
+
+		public ItemClickAction(ItemStack item, Runnable run, boolean cancel, InventoryAction... actions) {
 		this.item = item;
 		this.run = run;
 		this.actions = Arrays.asList(actions);
+		this.cancel = cancel;
 		BattlefieldPlugin.registerListener(this);
 	}
 
@@ -30,6 +36,7 @@ public class ItemAction implements Listener {
 	public void inventoryClickEvent(InventoryClickEvent event) {
 		if(actions.contains(event.getAction())) {
 			run.run();
+			event.setCancelled(cancel);
 		}
 	}
 
