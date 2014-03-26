@@ -31,6 +31,7 @@ public class BattlefieldPlayer {
 	private BattlefieldClass battlefieldClass;
 	private BattlefieldTeam team;
 	private Map<ItemType, KitItem> loadout;
+	private Squad squad;
 
 	public BattlefieldPlayer(Player player) {
 		this.player = new WeakReference<>(player);
@@ -48,6 +49,18 @@ public class BattlefieldPlayer {
 
 	public void setTeam(BattlefieldTeam team) {
 		this.team = team;
+	}
+
+	public Squad getSquad() {
+		return squad;
+	}
+
+	public boolean isInSquad() {
+		return squad != null;
+	}
+
+	public void setSquad(Squad squad) {
+		this.squad = squad;
 	}
 
 	public BattlefieldTeam getTeam() {

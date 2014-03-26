@@ -3,6 +3,7 @@ package me.august.battlefield.team;
 import me.august.battlefield.game.Match;
 import me.august.battlefield.player.BattlefieldPlayer;
 import me.august.battlefield.player.DeployScreen;
+import me.august.battlefield.player.Squad;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.util.Vector;
@@ -17,6 +18,7 @@ public class BattlefieldTeam {
 	private int maxPlayers;
 	private Vector deployPoint;
 	private Match match;
+	private List<Squad> squads;
 
 	public BattlefieldTeam(String name, ChatColor color, Vector deployPoint) {
 		this(name, color, 32, deployPoint);
@@ -27,6 +29,10 @@ public class BattlefieldTeam {
 		this.color = color;
 		this.maxPlayers = maxPlayers;
 		this.deployPoint = deployPoint;
+		squads = new ArrayList<>();
+		for(int i = 0; i < Math.ceil(maxPlayers / Squad.MAX_SQUAD_SIZE); i++) {
+			squads.add(new Squad(Squad.SQUAD_NAMES[i], false));
+		}
 	}
 
 	public String getName() {
@@ -75,4 +81,11 @@ public class BattlefieldTeam {
 		player.launchDeployScreen(2);
 	}
 
+	public List<Squad> getSquads() {
+		return squads;
+	}
+
+	public Match getMatch() {
+		return match;
+	}
 }

@@ -56,6 +56,37 @@ public class DeployScreen {
 			}
 		}, true, InventoryAction.PICKUP_ALL);
 
+		List<Squad> squads = player.getTeam().getSquads();
+		for(int i = 0; i < squads.size(); i++) {
+			final Squad squad = squads.get(i);
+
+			ItemStack squadItem = new ItemStack(Material.SKULL_ITEM);
+			squadItem.setDurability((short) 3);
+			ItemMeta meta = squadItem.getItemMeta();
+			meta.setDisplayName(ChatColor.GREEN + squad.getName() + " Squad");
+			List<String> lore = new ArrayList<>();
+			lore.add(ChatColor.BLUE + String.valueOf(squad.getPlayerCount()) + "/" + String.valueOf(Squad.MAX_SQUAD_SIZE));
+			if(!squad.isFull()) {
+				lore.add(ChatColor.GOLD + "Click to join");
+			}
+			meta.setLore(lore);
+			squadItem.setItemMeta(meta);
+
+			screen.setItem(36 + i, squadItem);
+
+			new ItemClickAction(squadItem, new Runnable() {
+				@Override
+				public void run() {
+					if(squad.isFull()) {
+						sendMessage(ChatColor.GREEN + "That squad is full");
+					} else {
+						addToSquad(squad);
+					}
+				}
+			}, true, InventoryAction.PICKUP_ALL);
+
+		}
+
 		/* Give player blindness */
 		player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 1, true));
 
@@ -66,6 +97,14 @@ public class DeployScreen {
 			}
 		}.runTaskLater(BattlefieldPlugin.get(), 1);
 
+	}
+
+	private void addToSquad(Squad squad) {
+		squad.addPlayer(player);
+	}
+
+	private void sendMessage(String msg) {
+		player.sendMessage(msg);
 	}
 
 	public void openScreen() {
