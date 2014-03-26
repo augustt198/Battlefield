@@ -34,7 +34,7 @@ public class ItemClickAction implements Listener {
 
 	@EventHandler
 	public void inventoryClickEvent(InventoryClickEvent event) {
-		if(actions.contains(event.getAction())) {
+		if(actions.contains(event.getAction()) && event.getCurrentItem().equals(item)) {
 			run.run();
 			event.setCancelled(cancel);
 		}

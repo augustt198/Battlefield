@@ -34,7 +34,7 @@ public class ItemUseAction implements Listener {
 
 	@EventHandler
 	public void inventoryClickEvent(PlayerInteractEvent event) {
-		if(event.getPlayer().getItemInHand() == item && actions.contains(event.getAction())) {
+		if(event.getPlayer().getItemInHand().equals(item) && actions.contains(event.getAction())) {
 			run.run();
 			event.setCancelled(cancel);
 		}
