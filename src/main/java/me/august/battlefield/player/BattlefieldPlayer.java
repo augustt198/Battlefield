@@ -2,12 +2,17 @@ package me.august.battlefield.player;
 
 import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.BattlefieldClass;
+import me.august.battlefield.guns.ItemType;
+import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.team.BattlefieldTeam;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BattlefieldPlayer {
 
@@ -22,14 +27,15 @@ public class BattlefieldPlayer {
 		return get(Bukkit.getPlayer(name));
 	}
 
-
 	private WeakReference<Player> player;
 	private BattlefieldClass battlefieldClass;
 	private BattlefieldTeam team;
+	private Map<ItemType, KitItem> loadout;
 
 	public BattlefieldPlayer(Player player) {
 		this.player = new WeakReference<>(player);
 		battlefieldClass = BattlefieldClass.ASSAULT;
+		loadout = new HashMap<>();
 	}
 
 	public void remove() {
@@ -58,6 +64,21 @@ public class BattlefieldPlayer {
 
 	public void launchDeployScreen(int wait /* Wait until deploy */) {
 		new DeployScreen(this, wait);
+	}
+
+	public void setKitItem(ItemType type, KitItem item) {
+		loadout.put(type, item);
+		String weapon = type == ItemType.PRIMARY || type == ItemType.SECONDARY ? " weapon " : "";
+		sendMessage(ChatColor.GREEN + "Your " + type.name().toLowerCase() + weapon + "has been set to " +
+				ChatColor.GOLD + item.getName());
+	}
+
+	public KitItem getKitItem(ItemType type) {
+		return loadout.get(type);
+	}
+
+	public Map<ItemType, KitItem> getLoadout() {
+		return loadout;
 	}
 
 	/* Aliases */

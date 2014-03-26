@@ -66,7 +66,6 @@ public class DeployScreen {
 			}
 		}.runTaskLater(BattlefieldPlugin.get(), 1);
 
-
 	}
 
 	public void openScreen() {
@@ -102,7 +101,15 @@ public class DeployScreen {
 			}
 		}
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
-			screen.setItem(i, classGuns.get(i - 9).toItem());
+			final Gun gun = classGuns.get(i - 9);
+			ItemStack gunItem = gun.toItem();
+			screen.setItem(i, gunItem);
+			new ItemClickAction(gunItem, new Runnable() {
+				@Override
+				public void run() {
+					player.setKitItem(gun.getType(), gun);
+				}
+			}, true, InventoryAction.PICKUP_ALL);
 		}
 
 		player.getPlayer().updateInventory();
@@ -147,7 +154,6 @@ public class DeployScreen {
 		}
 
 		item.setItemMeta(meta);
-
 		return item;
 	}
 

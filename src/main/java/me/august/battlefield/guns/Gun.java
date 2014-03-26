@@ -34,6 +34,10 @@ public class Gun extends KitItem {
 		return item;
 	}
 
+	public ItemType getType() {
+		return type;
+	}
+
 	@Override
 	public String toString() {
 		return "Gun{" +
