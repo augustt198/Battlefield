@@ -1,6 +1,7 @@
 package me.august.battlefield.util;
 
 import me.august.battlefield.BattlefieldPlugin;
+import me.august.battlefield.player.BattlefieldPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
@@ -19,13 +20,15 @@ public class ItemClickAction implements Listener {
 	private ItemStack item;
 	private Runnable run;
 	private boolean cancel;
+	private BattlefieldPlayer player;
 
-	public ItemClickAction(ItemStack item, Runnable run, InventoryAction... actions) {
-		this(item, run, false, actions);
+	public ItemClickAction(ItemStack item, BattlefieldPlayer player, Runnable run, InventoryAction... actions) {
+		this(item, player, run, false, actions);
 	}
 
-	public ItemClickAction(ItemStack item, Runnable run, boolean cancel, InventoryAction... actions) {
+	public ItemClickAction(ItemStack item, BattlefieldPlayer player, Runnable run, boolean cancel, InventoryAction... actions) {
 		this.item = item;
+		this.player = player;
 		this.run = run;
 		this.actions = Arrays.asList(actions);
 		this.cancel = cancel;
@@ -34,7 +37,7 @@ public class ItemClickAction implements Listener {
 
 	@EventHandler
 	public void inventoryClickEvent(InventoryClickEvent event) {
-		if(actions.contains(event.getAction()) && event.getCurrentItem().equals(item)) {
+		if(actions.contains(event.getAction()) && event.getCurrentItem().equals(item) && event.getWhoClicked() == player.getPlayer()) {
 			run.run();
 			event.setCancelled(cancel);
 		}

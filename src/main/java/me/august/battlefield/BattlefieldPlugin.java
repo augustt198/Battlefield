@@ -11,6 +11,7 @@ import me.august.battlefield.listener.ConnectionListener;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dom4j.Document;
@@ -159,6 +160,10 @@ public class BattlefieldPlugin extends JavaPlugin {
 
 	public static void registerListener(Listener listener) {
 		get().getServer().getPluginManager().registerEvents(listener, get());
+	}
+
+	public static void unregisterListener(Listener listener) {
+		HandlerList.unregisterAll(listener);
 	}
 
 	public static Document loadFromResources(String fileName) throws Exception {

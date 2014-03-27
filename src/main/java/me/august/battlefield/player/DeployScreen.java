@@ -49,7 +49,7 @@ public class DeployScreen {
 
 		ItemStack deployItem = createDeployItem();
 		screen.setItem(44, deployItem);
-		new ItemClickAction(deployItem, new Runnable() {
+		new ItemClickAction(deployItem, player, new Runnable() {
 			@Override
 			public void run() {
 				attemptDeploy();
@@ -77,7 +77,7 @@ public class DeployScreen {
 
 			screen.setItem(36 + i, squadItem);
 
-			new ItemClickAction(squadItem, new Runnable() {
+			new ItemClickAction(squadItem, player, new Runnable() {
 				@Override
 				public void run() {
 					addToSquad(squad);
@@ -117,7 +117,7 @@ public class DeployScreen {
 
 			ItemStack item = getItem(bfClass);
 
-			classViewers.add(new ItemClickAction(item, new Runnable() {
+			classViewers.add(new ItemClickAction(item, player, new Runnable() {
 				@Override
 				public void run() {
 					showClass(bfClass);
@@ -144,7 +144,7 @@ public class DeployScreen {
 			final Gun gun = classGuns.get(i - 9);
 			ItemStack gunItem = gun.toItem();
 			screen.setItem(i, gunItem);
-			new ItemClickAction(gunItem, new Runnable() {
+			new ItemClickAction(gunItem, player, new Runnable() {
 				@Override
 				public void run() {
 					player.setKitItem(gun.getType(), gun);
