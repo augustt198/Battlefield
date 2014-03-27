@@ -24,7 +24,7 @@ public class ItemClickAction implements Listener {
 		this(item, run, false, actions);
 	}
 
-		public ItemClickAction(ItemStack item, Runnable run, boolean cancel, InventoryAction... actions) {
+	public ItemClickAction(ItemStack item, Runnable run, boolean cancel, InventoryAction... actions) {
 		this.item = item;
 		this.run = run;
 		this.actions = Arrays.asList(actions);

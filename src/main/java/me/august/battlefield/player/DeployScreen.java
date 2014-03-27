@@ -77,11 +77,7 @@ public class DeployScreen {
 			new ItemClickAction(squadItem, new Runnable() {
 				@Override
 				public void run() {
-					if(squad.isFull()) {
-						sendMessage(ChatColor.GREEN + "That squad is full");
-					} else {
-						addToSquad(squad);
-					}
+					addToSquad(squad);
 				}
 			}, true, InventoryAction.PICKUP_ALL);
 
@@ -100,6 +96,10 @@ public class DeployScreen {
 	}
 
 	private void addToSquad(Squad squad) {
+		if(squad.isFull()) {
+			sendMessage(ChatColor.RED + "That squad is full");
+			return;
+		}
 		squad.addPlayer(player);
 	}
 

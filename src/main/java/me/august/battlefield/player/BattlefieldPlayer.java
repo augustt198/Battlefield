@@ -75,6 +75,14 @@ public class BattlefieldPlayer {
 		return player.get();
 	}
 
+	public String getName() {
+		return getPlayer().getName();
+	}
+
+	public String getColoredName() {
+		return "" + ChatColor.RESET + team.getColor() + getName() + ChatColor.RESET;
+	}
+
 	public void launchDeployScreen(int wait /* Wait until deploy */) {
 		new DeployScreen(this, wait);
 	}

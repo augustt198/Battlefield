@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Squad {
 
-	public static String[] SQUAD_NAMES = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
-	public static int MAX_SQUAD_SIZE = 5;
+	public final static String[] SQUAD_NAMES = {"Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel"};
+	public final static int MAX_SQUAD_SIZE = 5;
 
 	private boolean privateSquad;
 	private String name;
@@ -37,8 +37,12 @@ public class Squad {
 
 	public void addPlayer(BattlefieldPlayer player) {
 		if(isFull()) return;
+		sendMessageToAll(ChatColor.GOLD + player.getName() + ChatColor.GREEN + " has joined your squad");
 		players.add(player);
-		player.sendMessage(ChatColor.GREEN + "You have joined the " + name + " squad");
+		player.sendMessage(ChatColor.GREEN + "You have joined the " + ChatColor.GOLD + name + " squad");
+		if(player.getSquad() != null) {
+			player.getSquad().removePlayer(player);
+		}
 		player.setSquad(this);
 	}
 
@@ -53,6 +57,12 @@ public class Squad {
 
 	public boolean isPrivateSquad() {
 		return privateSquad;
+	}
+
+	private void sendMessageToAll(String msg) {
+		for(BattlefieldPlayer player : players) {
+			player.sendMessage(msg);
+		}
 	}
 
 }
