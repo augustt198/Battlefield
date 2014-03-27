@@ -69,6 +69,9 @@ public class DeployScreen {
 			if(!squad.isFull()) {
 				lore.add(ChatColor.GOLD + "Click to join");
 			}
+			if(player.getSquad() == squad) {
+				lore.add("You are in this squad");
+			}
 			meta.setLore(lore);
 			squadItem.setItemMeta(meta);
 
@@ -133,11 +136,9 @@ public class DeployScreen {
 	public void showClass(BattlefieldClass bfClass) {
 		viewingClass = bfClass;
 		List<Gun> classGuns = new ArrayList<>();
-		for(KitItem item : BattlefieldPlugin.get().getAvailableItems()) {
+		for(KitItem item : BattlefieldPlugin.get().getAvailableItems(viewingClass, BattlefieldClass.ALL)) {
 			if(!(item instanceof Gun)) continue;
-			if(item.getBattlefieldClass() == viewingClass) {
-				classGuns.add((Gun) item);
-			}
+			classGuns.add((Gun) item);
 		}
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
 			final Gun gun = classGuns.get(i - 9);

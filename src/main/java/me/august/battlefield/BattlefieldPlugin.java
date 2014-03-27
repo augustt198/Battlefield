@@ -21,6 +21,7 @@ import org.dom4j.io.SAXReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BattlefieldPlugin extends JavaPlugin {
@@ -125,6 +126,23 @@ public class BattlefieldPlugin extends JavaPlugin {
 
 	public List<KitItem> getAvailableItems() {
 		return availableItems;
+	}
+
+	public List<KitItem> getAvailableItems(BattlefieldClass bfClass) {
+		List<KitItem> items = new ArrayList<>();
+		for(KitItem i : availableItems) {
+			if(i.getBattlefieldClass() == bfClass) items.add(i);
+		}
+		return items;
+	}
+
+	public List<KitItem> getAvailableItems(BattlefieldClass... classes) {
+		List<BattlefieldClass> classList = Arrays.asList(classes);
+		List<KitItem> items = new ArrayList<>();
+		for(KitItem i : availableItems) {
+			if(classList.contains(i.getBattlefieldClass())) items.add(i);
+		}
+		return items;
 	}
 
 	public RotationManager getRotationManager() {
