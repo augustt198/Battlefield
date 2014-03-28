@@ -186,12 +186,9 @@ public class DeployScreen {
 		}
 		meta.setLore(Arrays.asList("Guns: " + String.valueOf(guns.size())));
 
-
-		for(String gun : guns) {
-			List<String> lore = meta.getLore();
-			lore.add(gun);
-			meta.setLore(lore);
-		}
+		List<String> lore = meta.getLore();
+		for(String gun : guns) lore.add(gun);
+		meta.setLore(lore);
 
 		item.setItemMeta(meta);
 		return item;
