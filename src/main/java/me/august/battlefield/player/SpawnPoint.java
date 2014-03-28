@@ -10,12 +10,14 @@ public class SpawnPoint {
 		TEAM_BASE, SQUAD_MATE, VEHICLE, OTHER
 	}
 
-	private Type spawnType;
-	private Location location;
+	private Location location;	private Type spawnType;
 
-	public SpawnPoint(Type spawnType, Location location) {
+	private String text;
+
+	public SpawnPoint(Type spawnType, Location location, String text) {
 		this.spawnType = spawnType;
 		this.location = location;
+		this.text = text;
 	}
 
 	public Type getType() {
@@ -24,6 +26,10 @@ public class SpawnPoint {
 
 	public Location getLocation() {
 		return location;
+	}
+
+	public String getText() {
+		return text;
 	}
 
 	public void spawnPlayer(BattlefieldPlayer player) {

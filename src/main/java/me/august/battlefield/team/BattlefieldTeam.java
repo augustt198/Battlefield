@@ -6,6 +6,7 @@ import me.august.battlefield.player.DeployScreen;
 import me.august.battlefield.player.Squad;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -88,4 +89,13 @@ public class BattlefieldTeam {
 	public Match getMatch() {
 		return match;
 	}
+
+	public Vector getBase() {
+		return deployPoint;
+	}
+
+	public Location getBaseLocation() {
+		return deployPoint.toLocation(match.getWorld());
+	}
+
 }

@@ -16,6 +16,10 @@ public class ObjectiveEvent extends Event {
 		this.objective = objective;
 	}
 
+	public Objective getObjective() {
+		return objective;
+	}
+
 	public HandlerList getHandlers() {
 		return handlers;
 	}

@@ -99,10 +99,10 @@ public class BattlefieldPlayer {
 		for(BattlefieldPlayer player : squad.getPlayers()) {
 			if(player == this) continue;
 			if(!player.isAlive()) continue;
-			spawnPoints.add(new SpawnPoint(SpawnPoint.Type.SQUAD_MATE, player.getLocation()));
+			spawnPoints.add(new SpawnPoint(SpawnPoint.Type.SQUAD_MATE, player.getLocation(), player.getName()));
 		}
 
-		spawnPoints.add(new SpawnPoint(SpawnPoint.Type.TEAM_BASE, team.getBaseLocation()));
+		spawnPoints.add(new SpawnPoint(SpawnPoint.Type.TEAM_BASE, team.getBaseLocation(), team.getNormalName() +  "base"));
 
 		return spawnPoints;
 	}
