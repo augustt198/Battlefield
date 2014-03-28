@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -208,6 +209,13 @@ public class DeployScreen {
 		} else {
 			player.sendMessage(ChatColor.GREEN + "Deploying");
 			//TODO add deployments
+		}
+	}
+
+	public void close() {
+		ItemClickAction.removeByPlayer(player);
+		if(screen.getViewers().contains(player.getPlayer())) {
+			player.getPlayer().closeInventory();
 		}
 	}
 

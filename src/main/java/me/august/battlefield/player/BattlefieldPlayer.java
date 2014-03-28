@@ -11,7 +11,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BattlefieldPlayer {
@@ -81,6 +83,28 @@ public class BattlefieldPlayer {
 
 	public String getColoredName() {
 		return "" + ChatColor.RESET + team.getColor() + getName() + ChatColor.RESET;
+	}
+
+	public boolean isAlive() {
+		return !getPlayer().isDead();
+	}
+
+	public Location getLocation() {
+		return getPlayer().getLocation();
+	}
+
+	public List<SpawnPoint> getSpawnPoints() {
+		List<SpawnPoint> spawnPoints = new ArrayList<>();
+
+		for(BattlefieldPlayer player : squad.getPlayers()) {
+			if(player == this) continue;
+			if(!player.isAlive()) continue;
+			spawnPoints.add(new SpawnPoint(SpawnPoint.Type.SQUAD_MATE, player.getLocation()));
+		}
+
+		spawnPoints.add(new SpawnPoint(SpawnPoint.Type.TEAM_BASE, team.getBaseLocation()));
+
+		return spawnPoints;
 	}
 
 	public void launchDeployScreen(int wait /* Wait until deploy */) {

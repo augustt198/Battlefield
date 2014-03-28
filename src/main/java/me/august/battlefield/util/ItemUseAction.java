@@ -19,9 +19,9 @@ public class ItemUseAction implements Listener {
 
 	private static List<ItemUseAction> itemActions = new ArrayList<>();
 
-	public static void removeByPlayer(BattlefieldPlayer bfPlayer) {
+	public static void removeByPlayer(BattlefieldPlayer player) {
 		for(ItemUseAction action : itemActions) {
-			if(action.getPlayer() == bfPlayer) {
+			if(action.getPlayer() == player) {
 				BattlefieldPlugin.unregisterListener(action);
 				itemActions.remove(action);
 			}

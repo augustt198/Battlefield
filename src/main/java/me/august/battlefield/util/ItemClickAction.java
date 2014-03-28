@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,17 @@ import java.util.List;
  * Created by August on 3/24/14.
  */
 public class ItemClickAction implements Listener {
+
+	private static List<ItemClickAction> itemActions = new ArrayList<>();
+
+	public static void removeByPlayer(BattlefieldPlayer player) {
+		for(ItemClickAction action : itemActions) {
+			if(action.getPlayer() == player) {
+				BattlefieldPlugin.unregisterListener(action);
+				itemActions.remove(action);
+			}
+		}
+	}
 
 	private List<InventoryAction> actions;
 	private ItemStack item;
@@ -33,6 +45,7 @@ public class ItemClickAction implements Listener {
 		this.actions = Arrays.asList(actions);
 		this.cancel = cancel;
 		BattlefieldPlugin.registerListener(this);
+		itemActions.add(this);
 	}
 
 	@EventHandler
@@ -53,6 +66,10 @@ public class ItemClickAction implements Listener {
 
 	public Runnable getRunnable() {
 		return run;
+	}
+
+	public BattlefieldPlayer getPlayer() {
+		return player;
 	}
 
 }
