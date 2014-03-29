@@ -57,6 +57,16 @@ public class DeployScreen {
 			}
 		}, true, InventoryAction.PICKUP_ALL);
 
+		ItemStack closeItem = createCloseItem();
+		screen.setItem(43, closeItem);
+		new ItemClickAction(closeItem, player, new Runnable() {
+			@Override
+			public void run() {
+				close();
+			}
+		}, true, InventoryAction.PICKUP_ALL);
+
+
 		List<Squad> squads = player.getTeam().getSquads();
 		for(int i = 0; i < squads.size(); i++) {
 			final Squad squad = squads.get(i);
@@ -203,6 +213,14 @@ public class DeployScreen {
 		return item;
 	}
 
+	public ItemStack createCloseItem() {
+		ItemStack item = new ItemStack(Material.ENDER_PEARL);
+		ItemMeta meta = item.getItemMeta();
+		meta.setDisplayName(ChatColor.GOLD + "Close menu");
+		item.setItemMeta(meta);
+		return item;
+	}
+
 	public void attemptDeploy() {
 		if(canDeploy) {
 			player.sendMessage(ChatColor.RED + "You cannot deploy yet!");
@@ -217,6 +235,7 @@ public class DeployScreen {
 		if(screen.getViewers().contains(player.getPlayer())) {
 			player.getPlayer().closeInventory();
 		}
+		player.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 	}
 
 	public BattlefieldPlayer getPlayer() {

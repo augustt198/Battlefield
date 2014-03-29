@@ -20,12 +20,14 @@ public class ItemUseAction implements Listener {
 	private static List<ItemUseAction> itemActions = new ArrayList<>();
 
 	public static void removeByPlayer(BattlefieldPlayer player) {
+		List<ItemUseAction> remove = new ArrayList<>();
 		for(ItemUseAction action : itemActions) {
 			if(action.getPlayer() == player) {
 				BattlefieldPlugin.unregisterListener(action);
-				itemActions.remove(action);
+				remove.add(action);
 			}
 		}
+		for(ItemUseAction action : remove) itemActions.remove(action);
 	}
 
 	private List<Action> actions;

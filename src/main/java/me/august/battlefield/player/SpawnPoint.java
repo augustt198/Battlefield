@@ -10,8 +10,8 @@ public class SpawnPoint {
 		TEAM_BASE, SQUAD_MATE, VEHICLE, OTHER
 	}
 
-	private Location location;	private Type spawnType;
-
+	private Location location;
+	private Type spawnType;
 	private String text;
 
 	public SpawnPoint(Type spawnType, Location location, String text) {
@@ -46,6 +46,15 @@ public class SpawnPoint {
 		for(BattlefieldPlayer player : players) {
 			spawnPlayer(player);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "SpawnPoint{" +
+				"spawnType=" + spawnType.name() + ", " +
+				"location=" + location.toString() + ", " +
+				"text=" + text +
+				"}";
 	}
 
 }
