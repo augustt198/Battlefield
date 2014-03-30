@@ -23,10 +23,11 @@ public class EventProvider implements Listener {
 	public void itemClick(InventoryClickEvent event) {
 		for(ItemAbility item : new ArrayList<>(ItemAbility.getItemAbilities())) {
 			if(item.getPlayer() != null && item.getPlayer().getPlayer() != event.getWhoClicked()) continue;
-			if(item.getItem() == null || item.getOnItemClick() == null) continue;
-			if(!event.getCurrentItem().equals(item.getItem())) continue;
-			item.getOnItemClick().run();
+			if(item.getItem() == null || !event.getCurrentItem().equals(item.getItem())) continue;
 			event.setCancelled(!item.isMovable());
+			if(item.getOnItemClick() != null) {
+				item.getOnItemClick().run();
+			}
 		}
 	}
 
@@ -43,12 +44,16 @@ public class EventProvider implements Listener {
 	public void itemUse(PlayerInteractEvent event) {
 		for(ItemAbility item :  new ArrayList<>(ItemAbility.getItemAbilities())) {
 			if(item.getPlayer() != null && item.getPlayer().getPlayer() != event.getPlayer()) continue;
-			if(!event.getItem().equals(item.getItem())) continue;
+			if(!event.getPlayer().getItemInHand().equals(item.getItem())) continue;
 			if(event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
-				item.getOnLeftClick().run();
+				if(item.getOnLeftClick() != null) {
+					item.getOnLeftClick().run();
+				}
 			}
 			if(event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
-				item.getOnRightClick().run();
+				if(item.getOnRightClick() != null) {
+					item.getOnRightClick().run();
+				}
 			}
 		}
 	}

@@ -6,15 +6,12 @@ import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.util.ItemAbility;
 import me.august.battlefield.util.ItemClickAction;
-import me.august.battlefield.util.Log;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -34,26 +31,18 @@ public class DeployScreen implements Listener {
 
 	private BattlefieldPlayer player;
 	private int wait;
-	private boolean canDeploy;
 	private Inventory screen;
 	private BattlefieldClass viewingClass;
-	List<ItemAbility> gunItems;
+	private List<ItemAbility> gunItems;
 
-	public DeployScreen(BattlefieldPlayer player, int wait) {
+	public DeployScreen(final BattlefieldPlayer player, int wait) {
 		this.player = player;
 		this.viewingClass = player.getBattlefieldClass();
 		this.wait = wait;
-		canDeploy = false;
 		gunItems = new ArrayList<>();
 
 		BattlefieldPlugin.registerListener(this);
 
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				setCanDeploy(true);
-			}
-		}.runTaskLater(BattlefieldPlugin.get(), wait * 20);
 
 		screen = Bukkit.createInventory(player.getPlayer(), 45, ChatColor.BOLD + "Deploy");
 
@@ -63,9 +52,9 @@ public class DeployScreen implements Listener {
 		new ItemAbility(deployItem).onItemClick(new Runnable() {
 			@Override
 			public void run() {
-				attemptDeploy();
+				player.attemptDeploy();
 			}
-		}).unmovable();
+		}).unmovable().withPlayer(player).withId("menu");
 
 		ItemStack closeItem = createCloseItem();
 		screen.setItem(43, closeItem);
@@ -75,7 +64,7 @@ public class DeployScreen implements Listener {
 				close();
 				closeViewers();
 			}
-		}).undroppable().unmovable();
+		}).undroppable().unmovable().withPlayer(player).withId("menu");
 
 		List<Squad> squads = player.getTeam().getSquads();
 		for(int i = 0; i < squads.size(); i++) {
@@ -87,11 +76,10 @@ public class DeployScreen implements Listener {
 			meta.setDisplayName(ChatColor.GREEN + squad.getName() + " Squad");
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.BLUE + String.valueOf(squad.getPlayerCount()) + "/" + String.valueOf(Squad.MAX_SQUAD_SIZE));
-			if(!squad.isFull()) {
-				lore.add(ChatColor.GOLD + "Click to join");
-			}
 			if(player.getSquad() == squad) {
 				lore.add("You are in this squad");
+			} else if(!squad.isFull()) {
+				lore.add(ChatColor.GOLD + "Click to join");
 			}
 			meta.setLore(lore);
 			squadItem.setItemMeta(meta);
@@ -103,7 +91,7 @@ public class DeployScreen implements Listener {
 				public void run() {
 					addToSquad(squad);
 				}
-			}).unmovable();
+			}).unmovable().withPlayer(player).withId("menu");
 
 		}
 
@@ -122,6 +110,10 @@ public class DeployScreen implements Listener {
 	private void addToSquad(Squad squad) {
 		if(squad.isFull()) {
 			sendMessage(ChatColor.RED + "That squad is full");
+			return;
+		}
+		if(squad.getPlayers().contains(player)) {
+			sendMessage(ChatColor.RED + "You are already in that squad");
 			return;
 		}
 		squad.addPlayer(player);
@@ -143,7 +135,7 @@ public class DeployScreen implements Listener {
 				public void run() {
 					showClass(bfClass);
 				}
-			}).unmovable());
+			}).unmovable().withPlayer(player).withId("menu"));
 
 		}
 		for(int i = 0; i < classViewers.size(); i++) {
@@ -163,8 +155,9 @@ public class DeployScreen implements Listener {
 			classGuns.add((Gun) item);
 		}
 		for(ItemAbility ability : gunItems) {
-			ItemAbility.removeAbility(ability);
+			ability.remove();
 		}
+		gunItems.clear();
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
 			final Gun gun = classGuns.get(i - 9);
 			ItemStack gunItem = gun.toItem();
@@ -175,7 +168,7 @@ public class DeployScreen implements Listener {
 				public void run() {
 					player.setKitItem(gun.getType(), gun);
 				}
-			}).unmovable());
+			}).unmovable().withPlayer(player).withId("menu"));
 
 		}
 
@@ -237,17 +230,9 @@ public class DeployScreen implements Listener {
 		return item;
 	}
 
-	public void attemptDeploy() {
-		if(canDeploy) {
-			player.sendMessage(ChatColor.RED + "You cannot deploy yet!");
-		} else {
-			player.sendMessage(ChatColor.GREEN + "Deploying");
-			//TODO add deployments
-		}
-	}
-
 	public void close() {
 		ItemClickAction.removeByPlayer(player);
+		ItemAbility.remove(player, "menu");
 		player.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
 		BattlefieldPlugin.unregisterListener(this);
 	}
@@ -277,7 +262,4 @@ public class DeployScreen implements Listener {
 		return screen;
 	}
 
-	private void setCanDeploy(boolean canDeploy) {
-		this.canDeploy =  canDeploy;
-	}
 }

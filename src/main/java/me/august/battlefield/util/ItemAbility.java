@@ -17,8 +17,24 @@ public class ItemAbility {
 		return itemAbilities;
 	}
 
-	public static void removeAbility(ItemAbility item) {
-		itemAbilities.remove(item);
+	public static void remove(BattlefieldPlayer player) {
+		List<ItemAbility> remove = new ArrayList<>();
+		for(ItemAbility ability : itemAbilities) {
+			if(ability.player == player) {
+				remove.add(ability);
+			}
+		}
+		for(ItemAbility ability : remove) itemAbilities.remove(ability);
+	}
+
+	public static void remove(BattlefieldPlayer player, String id) {
+		List<ItemAbility> remove = new ArrayList<>();
+		for(ItemAbility ability : itemAbilities) {
+			if(ability.player == player && ability.id != null && ability.id.equals(id)) {
+				remove.add(ability);
+			}
+		}
+		for(ItemAbility ability : remove) itemAbilities.remove(ability);
 	}
 
 	private ItemStack item;
@@ -28,6 +44,7 @@ public class ItemAbility {
 	private Runnable onLeftClick;
 	private boolean droppable;
 	private boolean movable;
+	private String id;
 
 	public ItemAbility(ItemStack item) {
 		this.item = item;
@@ -76,6 +93,11 @@ public class ItemAbility {
 		return this;
 	}
 
+	public ItemAbility withId(String id) {
+		this.id = id;
+		return this;
+	}
+
 	public ItemStack getItem() {
 		return item;
 	}
@@ -103,4 +125,13 @@ public class ItemAbility {
 	public boolean isMovable() {
 		return movable;
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void remove() {
+		itemAbilities.remove(this);
+	}
+
 }

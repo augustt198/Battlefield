@@ -22,20 +22,6 @@ public class ConnectionListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		final BattlefieldPlayer player = new BattlefieldPlayer(event.getPlayer());
 		BattlefieldPlugin.getCurrentMatch().joinRandomTeam(player);
-		List<SpawnPoint> spawnPoints = player.getSpawnPoints();
-		for(int i = 0; i < spawnPoints.size(); i++) {
-			final SpawnPoint sp = spawnPoints.get(i);
-			ItemStack spItem = sp.toItem();
-
-			player.getPlayer().getInventory().setItem(i, spItem);
-
-			new ItemAbility(spItem).undroppable().onLeftClick(new Runnable() {
-				@Override
-				public void run() {
-					player.teleport(sp.getLocation());
-				}
-			}).unmovable().undroppable();
-		}
 	}
 
 	@EventHandler
