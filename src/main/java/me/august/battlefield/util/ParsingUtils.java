@@ -66,4 +66,8 @@ public class ParsingUtils {
 		if(missing.size() > 0) throw new ParsingException("Required elements not found: " + StringUtils.join(missing, ", "));
 	}
 
+	public static String simpleCoordsString(Vector vec) {
+		return String.valueOf(vec.getBlockX()) + ", " + String.valueOf(vec.getBlockY()) + ", " + String.valueOf(vec.getBlockZ());
+	}
+
 }

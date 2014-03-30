@@ -4,13 +4,18 @@ import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
+import me.august.battlefield.util.ItemAbility;
 import me.august.battlefield.util.ItemClickAction;
+import me.august.battlefield.util.Log;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,19 +30,24 @@ import java.util.List;
 /**
  * Created by August on 3/24/14.
  */
-public class DeployScreen {
+public class DeployScreen implements Listener {
 
 	private BattlefieldPlayer player;
 	private int wait;
 	private boolean canDeploy;
 	private Inventory screen;
 	private BattlefieldClass viewingClass;
+	List<ItemAbility> gunItems;
 
 	public DeployScreen(BattlefieldPlayer player, int wait) {
 		this.player = player;
 		this.viewingClass = player.getBattlefieldClass();
 		this.wait = wait;
 		canDeploy = false;
+		gunItems = new ArrayList<>();
+
+		BattlefieldPlugin.registerListener(this);
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -50,22 +60,22 @@ public class DeployScreen {
 
 		ItemStack deployItem = createDeployItem();
 		screen.setItem(44, deployItem);
-		new ItemClickAction(deployItem, player, new Runnable() {
+		new ItemAbility(deployItem).onItemClick(new Runnable() {
 			@Override
 			public void run() {
 				attemptDeploy();
 			}
-		}, true, InventoryAction.PICKUP_ALL);
+		}).unmovable();
 
 		ItemStack closeItem = createCloseItem();
 		screen.setItem(43, closeItem);
-		new ItemClickAction(closeItem, player, new Runnable() {
+		new ItemAbility(closeItem).onItemClick(new Runnable() {
 			@Override
 			public void run() {
 				close();
+				closeViewers();
 			}
-		}, true, InventoryAction.PICKUP_ALL);
-
+		}).undroppable().unmovable();
 
 		List<Squad> squads = player.getTeam().getSquads();
 		for(int i = 0; i < squads.size(); i++) {
@@ -88,12 +98,12 @@ public class DeployScreen {
 
 			screen.setItem(36 + i, squadItem);
 
-			new ItemClickAction(squadItem, player, new Runnable() {
+			new ItemAbility(squadItem).onItemClick(new Runnable() {
 				@Override
 				public void run() {
 					addToSquad(squad);
 				}
-			}, true, InventoryAction.PICKUP_ALL);
+			}).unmovable();
 
 		}
 
@@ -122,18 +132,19 @@ public class DeployScreen {
 	}
 
 	public void openScreen() {
-		List<ItemClickAction> classViewers = new ArrayList<>();
+		List<ItemAbility> classViewers = new ArrayList<>();
 		for(final BattlefieldClass bfClass : BattlefieldClass.values()) {
 			if(bfClass == BattlefieldClass.ALL) continue;
 
 			ItemStack item = getItem(bfClass);
 
-			classViewers.add(new ItemClickAction(item, player, new Runnable() {
+			classViewers.add(new ItemAbility(item).onItemClick(new Runnable() {
 				@Override
 				public void run() {
 					showClass(bfClass);
 				}
-			}, true, InventoryAction.PICKUP_ALL));
+			}).unmovable());
+
 		}
 		for(int i = 0; i < classViewers.size(); i++) {
 			screen.setItem(i, classViewers.get(i).getItem());
@@ -151,16 +162,21 @@ public class DeployScreen {
 			if(!(item instanceof Gun)) continue;
 			classGuns.add((Gun) item);
 		}
+		for(ItemAbility ability : gunItems) {
+			ItemAbility.removeAbility(ability);
+		}
 		for(int i = 9; i < 9 + classGuns.size(); i++) {
 			final Gun gun = classGuns.get(i - 9);
 			ItemStack gunItem = gun.toItem();
 			screen.setItem(i, gunItem);
-			new ItemClickAction(gunItem, player, new Runnable() {
+
+			gunItems.add(new ItemAbility(gunItem).onItemClick(new Runnable() {
 				@Override
 				public void run() {
 					player.setKitItem(gun.getType(), gun);
 				}
-			}, true, InventoryAction.PICKUP_ALL);
+			}).unmovable());
+
 		}
 
 		player.getPlayer().updateInventory();
@@ -232,10 +248,21 @@ public class DeployScreen {
 
 	public void close() {
 		ItemClickAction.removeByPlayer(player);
+		player.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
+		BattlefieldPlugin.unregisterListener(this);
+	}
+
+	public void closeViewers() {
 		if(screen.getViewers().contains(player.getPlayer())) {
 			player.getPlayer().closeInventory();
 		}
-		player.getPlayer().removePotionEffect(PotionEffectType.BLINDNESS);
+	}
+
+	@EventHandler
+	public void inventoryClose(InventoryCloseEvent event) {
+		if(player.getPlayer().equals(event.getPlayer())) {
+			close();
+		}
 	}
 
 	public BattlefieldPlayer getPlayer() {
