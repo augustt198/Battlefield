@@ -20,7 +20,7 @@ public class ConnectionListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		final BattlefieldPlayer player = new BattlefieldPlayer(event.getPlayer());
+		BattlefieldPlayer player = new BattlefieldPlayer(event.getPlayer());
 		BattlefieldPlugin.getCurrentMatch().joinRandomTeam(player);
 	}
 

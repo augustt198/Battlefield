@@ -25,7 +25,7 @@ public class BattlefieldPlayer implements Spawnable {
 
 	public static BattlefieldPlayer get(Player player) {
 		for(BattlefieldPlayer p : BattlefieldPlugin.getCurrentMatch().getPlayers()) {
-			if(p.getPlayer() == player) return p;
+			if(p.getPlayer().equals(player)) return p;
 		}
 		return null;
 	}
@@ -49,10 +49,11 @@ public class BattlefieldPlayer implements Spawnable {
 		loadout = new HashMap<>();
 		canDeploy = false;
 		deploying = false;
+		BattlefieldPlugin.getCurrentMatch().addPlayer(this);
 	}
 
 	public void remove() {
-		BattlefieldPlugin.getCurrentMatch().getPlayers().remove(this);
+		BattlefieldPlugin.getCurrentMatch().removePlayer(this);
 	}
 
 	public void setBattlefieldClass(BattlefieldClass battlefieldClass) {
@@ -97,6 +98,14 @@ public class BattlefieldPlayer implements Spawnable {
 
 	public boolean isAlive() {
 		return !getPlayer().isDead();
+	}
+
+	public boolean isDeploying() {
+		return deploying;
+	}
+
+	public Spawnable getNextSpawn() {
+		return nextSpawn;
 	}
 
 	public Location getLocation() {
@@ -150,7 +159,7 @@ public class BattlefieldPlayer implements Spawnable {
 					setNextSpawn(sp.getSpawn());
 				}
 			}
-			).unmovable().undroppable().withPlayer(this);
+			).unmovable().undroppable().withPlayer(this).unplaceable();
 		}
 
 		ItemStack menuItem = new ItemStack(Material.ENCHANTED_BOOK);
@@ -189,6 +198,10 @@ public class BattlefieldPlayer implements Spawnable {
 		if(!canDeploy) {
 			sendMessage(ChatColor.RED + "You cannot deploy yet!");
 		} else {
+			if(nextSpawn == null) {
+				sendMessage(ChatColor.RED + "You must select a spawnpoint");
+				return;
+			}
 			sendMessage(ChatColor.GREEN + "Deploying");
 			//TODO add deployments
 		}

@@ -8,6 +8,7 @@ import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.GunFactory;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.listener.ConnectionListener;
+import me.august.battlefield.listener.DeployingPlayerListener;
 import me.august.battlefield.listener.EventProvider;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
@@ -108,6 +109,7 @@ public class BattlefieldPlugin extends JavaPlugin {
 	private void registerListeners() {
 		registerListener(new ConnectionListener());
 		registerListener(new EventProvider());
+		registerListener(new DeployingPlayerListener());
 	}
 
 	private boolean checkDataFile(String name) {

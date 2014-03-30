@@ -44,12 +44,14 @@ public class ItemAbility {
 	private Runnable onLeftClick;
 	private boolean droppable;
 	private boolean movable;
+	private boolean placeable;
 	private String id;
 
 	public ItemAbility(ItemStack item) {
 		this.item = item;
 		droppable = true;
 		movable = true;
+		placeable = true;
 		itemAbilities.add(this);
 	}
 
@@ -75,6 +77,16 @@ public class ItemAbility {
 
 	public ItemAbility movable() {
 		movable = true;
+		return this;
+	}
+
+	public ItemAbility unplaceable() {
+		placeable = false;
+		return this;
+	}
+
+	public ItemAbility placeable() {
+		placeable = true;
 		return this;
 	}
 
@@ -124,6 +136,10 @@ public class ItemAbility {
 
 	public boolean isMovable() {
 		return movable;
+	}
+
+	public boolean isPlaceable() {
+		return placeable;
 	}
 
 	public String getId() {

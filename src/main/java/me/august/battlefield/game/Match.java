@@ -44,6 +44,14 @@ public class Match {
 		return players;
 	}
 
+	public void addPlayer(BattlefieldPlayer player) {
+		players.add(player);
+	}
+
+	public void removePlayer(BattlefieldPlayer player) {
+		players.remove(player);
+	}
+
 	public void joinRandomTeam(BattlefieldPlayer player) {
 		int lowest = teams.get(0).getMaxPlayers();
 		for(BattlefieldTeam team : teams) {
