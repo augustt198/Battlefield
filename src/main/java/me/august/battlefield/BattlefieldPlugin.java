@@ -10,6 +10,7 @@ import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.listener.ConnectionListener;
 import me.august.battlefield.listener.DeployingPlayerListener;
 import me.august.battlefield.listener.EventProvider;
+import me.august.battlefield.listener.PlayerListener;
 import me.august.battlefield.util.Log;
 import me.august.battlefield.util.XMLUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -110,6 +111,7 @@ public class BattlefieldPlugin extends JavaPlugin {
 		registerListener(new ConnectionListener());
 		registerListener(new EventProvider());
 		registerListener(new DeployingPlayerListener());
+		registerListener(new PlayerListener());
 	}
 
 	private boolean checkDataFile(String name) {

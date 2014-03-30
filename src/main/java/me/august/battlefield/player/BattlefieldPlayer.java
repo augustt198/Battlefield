@@ -6,10 +6,7 @@ import me.august.battlefield.guns.ItemType;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.team.BattlefieldTeam;
 import me.august.battlefield.util.ItemAbility;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -130,6 +127,8 @@ public class BattlefieldPlayer implements Spawnable {
 
 	public void launchDeployScreen(final int wait /* Wait until deploy */) {
 
+		getPlayer().setGameMode(GameMode.CREATIVE);
+
 		getPlayer().getInventory().clear();
 		deploying = true;
 
@@ -194,6 +193,7 @@ public class BattlefieldPlayer implements Spawnable {
 		ItemAbility.remove(this, "menu");
 	}
 
+	@SuppressWarnings("deprecated")
 	public void attemptDeploy() {
 		if(!canDeploy) {
 			sendMessage(ChatColor.RED + "You cannot deploy yet!");
@@ -202,8 +202,17 @@ public class BattlefieldPlayer implements Spawnable {
 				sendMessage(ChatColor.RED + "You must select a spawnpoint");
 				return;
 			}
+			deploying = false;
 			sendMessage(ChatColor.GREEN + "Deploying");
-			//TODO add deployments
+			teleport(nextSpawn.getLocation());
+			ItemAbility.remove(this);
+			Player p = getPlayer();
+			p.getInventory().clear();
+			p.setGameMode(GameMode.SURVIVAL);
+			p.updateInventory();
+			p.setHealth(20);
+			p.setSaturation(20);
+			p.setFoodLevel(20);
 		}
 	}
 

@@ -1,10 +1,11 @@
+<!-- Temporary -->
 <map name="Operation Metro">
 	<teams>
 		<team name="The Red Team" color="red" maxplayers="32">
-			<spawn>1, 2, 3</spawn>
+			<spawn>-39, 67, -540</spawn>
 		</team>
 		<team name="The Blue Team" color="blue" maxplayers="32">
-			<spawn>4, 5, 6</spawn>
+			<spawn>47, 101, -435</spawn>
 		</team>
 	</teams>
 </map>

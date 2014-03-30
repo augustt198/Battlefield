@@ -5,6 +5,7 @@ import me.august.battlefield.player.BattlefieldPlayer;
 import me.august.battlefield.player.SpawnPoint;
 import me.august.battlefield.util.ItemAbility;
 import me.august.battlefield.util.Log;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
