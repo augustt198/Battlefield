@@ -2,7 +2,6 @@ package me.august.battlefield.player;
 
 import me.august.battlefield.util.ParsingUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,13 +15,13 @@ public class SpawnPoint {
 		TEAM_BASE, SQUAD_MATE, VEHICLE, OTHER
 	}
 
-	private Location location;
+	private Spawnable spawn;
 	private Type spawnType;
 	private String text;
 
-	public SpawnPoint(Type spawnType, Location location, String text) {
+	public SpawnPoint(Type spawnType, Spawnable spawn, String text) {
 		this.spawnType = spawnType;
-		this.location = location;
+		this.spawn = spawn;
 		this.text = text;
 	}
 
@@ -30,8 +29,8 @@ public class SpawnPoint {
 		return spawnType;
 	}
 
-	public Location getLocation() {
-		return location;
+	public Spawnable getSpawn() {
+		return spawn;
 	}
 
 	public String getText() {
@@ -39,7 +38,7 @@ public class SpawnPoint {
 	}
 
 	public void spawnPlayer(BattlefieldPlayer player) {
-		player.teleport(location);
+		player.teleport(spawn.getLocation());
 	}
 
 	public void spawnPlayers(BattlefieldPlayer... players) {
@@ -81,7 +80,7 @@ public class SpawnPoint {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(displayName);
 		List<String> lore = new ArrayList<>();
-		lore.add("Coordinates: " + ParsingUtils.simpleCoordsString(location.toVector()));
+		lore.add("Coordinates: " + ParsingUtils.simpleCoordsString(spawn.getLocation().toVector()));
 		meta.setLore(lore);
 		item.setItemMeta(meta);
 
@@ -93,7 +92,7 @@ public class SpawnPoint {
 	public String toString() {
 		return "SpawnPoint{" +
 				"spawnType=" + spawnType.name() + ", " +
-				"location=" + location.toString() + ", " +
+				"location=" + spawn.getLocation().toString() + ", " +
 				"text=" + text +
 				"}";
 	}

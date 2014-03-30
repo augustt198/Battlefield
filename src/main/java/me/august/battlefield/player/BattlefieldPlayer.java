@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BattlefieldPlayer {
+public class BattlefieldPlayer implements Spawnable {
 
 	public static BattlefieldPlayer get(Player player) {
 		for(BattlefieldPlayer p : BattlefieldPlugin.getCurrentMatch().getPlayers()) {
@@ -41,6 +41,7 @@ public class BattlefieldPlayer {
 	private Squad squad;
 	private boolean canDeploy;
 	private boolean deploying;
+	private Spawnable nextSpawn;
 
 	public BattlefieldPlayer(Player player) {
 		this.player = new WeakReference<>(player);
@@ -109,11 +110,11 @@ public class BattlefieldPlayer {
 			for(BattlefieldPlayer player : squad.getPlayers()) {
 				if(player == this) continue;
 				if(!player.isAlive()) continue;
-				spawnPoints.add(new SpawnPoint(SpawnPoint.Type.SQUAD_MATE, player.getLocation(), player.getName()));
+				spawnPoints.add(new SpawnPoint(SpawnPoint.Type.SQUAD_MATE, player, player.getName()));
 			}
 		}
 
-		spawnPoints.add(new SpawnPoint(SpawnPoint.Type.TEAM_BASE, team.getBaseLocation(), team.getNormalName() +  " base"));
+		spawnPoints.add(new SpawnPoint(SpawnPoint.Type.TEAM_BASE, team, team.getNormalName() +  " base"));
 
 		return spawnPoints;
 	}
@@ -140,9 +141,16 @@ public class BattlefieldPlayer {
 			new ItemAbility(spItem).undroppable().onLeftClick(new Runnable() {
 				@Override
 				public void run() {
-					teleport(sp.getLocation());
+					teleport(sp.getSpawn().getLocation());
 				}
-			}).unmovable().undroppable().withPlayer(this);
+			}).onRightClick(new Runnable() {
+				@Override
+				public void run() {
+					sendMessage(ChatColor.GREEN + "Spawnpoint has been set!");
+					setNextSpawn(sp.getSpawn());
+				}
+			}
+			).unmovable().undroppable().withPlayer(this);
 		}
 
 		ItemStack menuItem = new ItemStack(Material.ENCHANTED_BOOK);
@@ -222,4 +230,7 @@ public class BattlefieldPlayer {
 		getPlayer().teleport(location);
 	}
 
+	public void setNextSpawn(Spawnable nextSpawn) {
+		this.nextSpawn = nextSpawn;
+	}
 }
