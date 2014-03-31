@@ -202,6 +202,10 @@ public class BattlefieldPlayer implements Spawnable {
 				sendMessage(ChatColor.RED + "You must select a spawnpoint");
 				return;
 			}
+			if(loadout.size() < 2) {
+				sendMessage(ChatColor.RED + "Please select a primary and secondary weapon before spawning");
+				return;
+			}
 			deploying = false;
 			sendMessage(ChatColor.GREEN + "Deploying");
 			teleport(nextSpawn.getLocation());
@@ -209,15 +213,24 @@ public class BattlefieldPlayer implements Spawnable {
 			Player p = getPlayer();
 			p.getInventory().clear();
 			p.setGameMode(GameMode.SURVIVAL);
-			p.updateInventory();
 			p.setHealth(20);
 			p.setSaturation(20);
 			p.setFoodLevel(20);
+			addKitToInventory();
+
+			p.updateInventory();
+
 		}
 	}
 
 	public void createDeployScreen(int wait) {
 		new DeployScreen(this, wait);
+	}
+
+	private void addKitToInventory() {
+		for(ItemType type : loadout.keySet()) {
+			getPlayer().getInventory().setItem(type.getSlot(), loadout.get(type).toItem());
+		}
 	}
 
 	public void setKitItem(ItemType type, KitItem item) {
