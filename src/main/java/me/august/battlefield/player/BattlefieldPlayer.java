@@ -1,7 +1,7 @@
 package me.august.battlefield.player;
 
-import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.BattlefieldClass;
+import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.guns.ItemType;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.team.BattlefieldTeam;

@@ -1,7 +1,5 @@
 package me.august.battlefield.game;
 
-import static me.august.battlefield.util.ParsingUtils.*;
-
 import me.august.battlefield.BattlefieldPlugin;
 import me.august.battlefield.team.BattlefieldTeam;
 import me.august.battlefield.util.XMLUtils;
@@ -9,9 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.dom4j.Document;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
-import java.io.InputStream;
+import static me.august.battlefield.util.ParsingUtils.*;
 
 /**
  * Created by August on 3/23/14.

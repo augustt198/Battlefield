@@ -1,9 +1,6 @@
 package me.august.battlefield.listener;
 
-import me.august.battlefield.player.BattlefieldPlayer;
 import me.august.battlefield.util.ItemAbility;
-import me.august.battlefield.util.Log;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -13,7 +10,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by August on 3/29/14.

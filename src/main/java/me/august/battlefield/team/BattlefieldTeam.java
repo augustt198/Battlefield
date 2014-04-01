@@ -2,10 +2,8 @@ package me.august.battlefield.team;
 
 import me.august.battlefield.game.Match;
 import me.august.battlefield.player.BattlefieldPlayer;
-import me.august.battlefield.player.DeployScreen;
 import me.august.battlefield.player.Spawnable;
 import me.august.battlefield.player.Squad;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

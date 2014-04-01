@@ -1,10 +1,10 @@
 package me.august.battlefield.guns;
 
-import static me.august.battlefield.util.ParsingUtils.*;
-
 import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.exception.ParsingException;
 import org.dom4j.Element;
+
+import static me.august.battlefield.util.ParsingUtils.*;
 
 public class GunFactory {
 

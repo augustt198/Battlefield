@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
 /**
@@ -66,6 +67,13 @@ public class DeployingPlayerListener implements Listener {
 	public void onEntity(VehicleEntityCollisionEvent event) {
 		if(!(event.getEntity() instanceof Player)) return;
 		BattlefieldPlayer player = BattlefieldPlayer.get((Player) event.getEntity());
+		if(player == null) return;
+		event.setCancelled(player.isDeploying());
+	}
+
+	@EventHandler
+	public void onItemPickup(PlayerPickupItemEvent event) {
+		BattlefieldPlayer player = BattlefieldPlayer.get(event.getPlayer());
 		if(player == null) return;
 		event.setCancelled(player.isDeploying());
 	}

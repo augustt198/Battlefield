@@ -1,7 +1,6 @@
 package me.august.battlefield.game;
 
 import me.august.battlefield.player.BattlefieldPlayer;
-import me.august.battlefield.player.Squad;
 import me.august.battlefield.team.BattlefieldTeam;
 import org.bukkit.World;
 
