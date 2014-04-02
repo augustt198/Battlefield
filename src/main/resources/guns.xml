@@ -8,6 +8,7 @@
         <material>ARROW</material>
         <accuracy>0.9</accuracy>
 		<maxdamage>5</maxdamage>
+		<zoom>3</zoom>
     </gun>
 
 	<gun name="SV98" type="primary">
@@ -18,6 +19,7 @@
 		<material>ARROW</material>
 		<accuracy>0.98</accuracy>
 		<maxdamage>12</maxdamage>
+		<zoom>100</zoom>
 	</gun>
 
     <gun name="M9" type="secondary">

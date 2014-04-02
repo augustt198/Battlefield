@@ -1,5 +1,6 @@
 package me.august.battlefield.listener;
 
+import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.manager.Manager;
 import me.august.battlefield.player.BattlefieldPlayer;
@@ -45,7 +46,13 @@ public class PlayerListener implements Listener {
 			for(KitItem item : player.getLoadout().values()) {
 				if(item.toItem().equals(event.getItem())) {
 					Manager.zoom.add(player);
-					player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1000, true));
+					if(item instanceof Gun) {
+						Gun gun = (Gun) item;
+						if(gun.getZoom() != 0) {
+							player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE,
+									gun.getZoom(), true));
+						}
+					}
 				}
 			}
 

@@ -12,9 +12,11 @@ public class Gun extends KitItem {
 	private int fireRate;
 	private double accuracy;
 	private double maxDamage;
+	private int zoom;
 	private Material material;
 
-	public Gun(String name, BattlefieldClass gunClass, Material material, ItemType type,  int magazines, int bullets, int fireRate, double accuracy, double maxDamage) {
+	public Gun(String name, BattlefieldClass gunClass, Material material, ItemType type,  int magazines, int bullets,
+			   int fireRate, double accuracy, double maxDamage, int zoom) {
 		super(name, gunClass);
 		rounds = new GunRounds(magazines, bullets);
 
@@ -23,6 +25,7 @@ public class Gun extends KitItem {
 		this.fireRate = fireRate;
 		this.accuracy = accuracy;
 		this.maxDamage = maxDamage;
+		this.zoom = zoom;
 	}
 
 	@Override
@@ -32,6 +35,26 @@ public class Gun extends KitItem {
 		meta.setDisplayName(name);
 		item.setItemMeta(meta);
 		return item;
+	}
+
+	public int getFireRate() {
+		return fireRate;
+	}
+
+	public double getAccuracy() {
+		return accuracy;
+	}
+
+	public double getMaxDamage() {
+		return maxDamage;
+	}
+
+	public int getZoom() {
+		return zoom;
+	}
+
+	public Material getMaterial() {
+		return material;
 	}
 
 	public ItemType getType() {
