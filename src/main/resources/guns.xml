@@ -9,6 +9,7 @@
         <accuracy>0.9</accuracy>
 		<maxdamage>5</maxdamage>
 		<zoom>3</zoom>
+		<speed>5</speed>
     </gun>
 
 	<gun name="SV98" type="primary">
@@ -20,6 +21,7 @@
 		<accuracy>0.98</accuracy>
 		<maxdamage>12</maxdamage>
 		<zoom>100</zoom>
+		<speed>10</speed>
 	</gun>
 
     <gun name="M9" type="secondary">
@@ -29,6 +31,7 @@
         <material>BLAZE_ROD</material>
         <accuracy>0.6</accuracy>
 		<maxdamage>2</maxdamage>
+		<speed>3</speed>
     </gun>
 
 </guns>

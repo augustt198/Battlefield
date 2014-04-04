@@ -24,6 +24,8 @@ public class GunFactory {
 
 		int zoom = element.element("zoom") == null ? 0 : parseInt(element.element("zoom").getText());
 
+		double speed = element.element("speed") == null ? 1 : parseDouble(element.element("speed").getText());
+
 		return new Gun(
 				element.attributeValue("name"),
 				gunClass,
@@ -34,7 +36,8 @@ public class GunFactory {
 				parseInt(element.element("firerate").getText()),
 				parseDouble(element.element("accuracy").getText()),
 				parseDouble(element.element("maxdamage").getText()),
-				zoom
+				zoom,
+				speed
 		);
 
 	}
