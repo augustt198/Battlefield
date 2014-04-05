@@ -1,9 +1,11 @@
 package me.august.battlefield.listener;
 
 import me.august.battlefield.guns.Gun;
+import me.august.battlefield.guns.GunAmmo;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.manager.Manager;
 import me.august.battlefield.player.BattlefieldPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -64,7 +66,16 @@ public class PlayerListener implements Listener {
 			}
 
 		} else if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+			GunAmmo ammo = player.getAmmo().get(gun);
 			Player p = event.getPlayer();
+			if(ammo != null) {
+				if(ammo.canFire()) {
+					ammo.removeBullet();
+				} else {
+					p.sendMessage(ChatColor.RED + "Your " + gun.getName() + " is out of ammo!");
+					return;
+				}
+			}
 			float yaw = p.getLocation().getYaw();
 			float pitch = p.getLocation().getPitch();
 			Vector v = new Vector(
@@ -73,7 +84,8 @@ public class PlayerListener implements Listener {
 					Math.sin(Math.toRadians(yaw + 90))
 			).multiply(gun.getSpeed());
 			p.launchProjectile(Arrow.class, v);
-			p.playSound(p.getLocation(), Sound.FIREWORK_BLAST, 5, 0);
+			p.getWorld().playSound(p.getLocation(), Sound.FIREWORK_BLAST, 5, 0);
+
 		}
 
 	}

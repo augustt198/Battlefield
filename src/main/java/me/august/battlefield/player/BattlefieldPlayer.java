@@ -136,8 +136,6 @@ public class BattlefieldPlayer implements Spawnable {
 		getPlayer().getInventory().clear();
 		deploying = true;
 
-		GunAmmo ammo = new GunAmmo(1, 1);
-
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -253,6 +251,10 @@ public class BattlefieldPlayer implements Spawnable {
 		String weapon = type == ItemType.PRIMARY || type == ItemType.SECONDARY ? " weapon " : "";
 		sendMessage(ChatColor.GREEN + "Your " + type.name().toLowerCase() + weapon + "has been set to " +
 				ChatColor.GOLD + item.getName());
+		if(item instanceof Gun) {
+			Gun gun = (Gun) item;
+			ammo.put(gun, gun.getAmmo().clone());
+		}
 	}
 
 	public KitItem getKitItem(ItemType type) {
@@ -273,6 +275,15 @@ public class BattlefieldPlayer implements Spawnable {
 
 	public Map<Gun, GunAmmo> getAmmo() {
 		return ammo;
+	}
+
+	public KitItem getKitItemInHand() {
+		for(KitItem item : loadout.values()) {
+			if(item.toItem().equals(getPlayer().getItemInHand())) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	/* Aliases */

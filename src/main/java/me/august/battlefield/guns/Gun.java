@@ -15,11 +15,13 @@ public class Gun extends KitItem {
 	private int zoom;
 	private double speed;
 	private Material material;
+	private int magazines;
+	private int bullets;
 
 	public Gun(String name, BattlefieldClass gunClass, Material material, ItemType type,  int magazines, int bullets,
 			   int fireRate, double accuracy, double maxDamage, int zoom, double speed) {
 		super(name, gunClass);
-		ammo = new GunAmmo(magazines, bullets);
+		ammo = new GunAmmo(magazines, bullets, this);
 
 		this.material = material;
 		this.type = type;
@@ -28,6 +30,8 @@ public class Gun extends KitItem {
 		this.maxDamage = maxDamage;
 		this.zoom = zoom;
 		this.speed = speed;
+		this.magazines = magazines;
+		this.bullets = bullets;
 	}
 
 	@Override
@@ -69,6 +73,15 @@ public class Gun extends KitItem {
 
 	public GunAmmo getAmmo() {
 		return ammo;
+	}
+
+	/* Default ammunition */
+	public int getMagazines() {
+		return magazines;
+	}
+
+	public int getBullets() {
+		return bullets;
 	}
 
 	@Override

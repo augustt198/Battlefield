@@ -9,10 +9,11 @@ import org.bukkit.Bukkit;
 public class Manager {
 
 	public static ZoomManager zoom = new ZoomManager();
+	public static AmmoManager manager = new AmmoManager();
 
 	public Manager() {
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(BattlefieldPlugin.get(), zoom, 1, 1);
-
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(BattlefieldPlugin.get(), manager, 1, 1);
 	}
 
 }
