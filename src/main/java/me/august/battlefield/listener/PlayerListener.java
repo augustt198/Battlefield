@@ -4,8 +4,9 @@ import me.august.battlefield.guns.Gun;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.manager.Manager;
 import me.august.battlefield.player.BattlefieldPlayer;
+import org.bukkit.Sound;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -55,7 +56,7 @@ public class PlayerListener implements Listener {
 
 		if(gun == null) return;
 
-		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR) {
+		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			Manager.zoom.add(player);
 			if(gun.getZoom() != 0) {
 				player.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE,
@@ -66,13 +67,13 @@ public class PlayerListener implements Listener {
 			Player p = event.getPlayer();
 			float yaw = p.getLocation().getYaw();
 			float pitch = p.getLocation().getPitch();
-			double speed = gun.getSpeed();
 			Vector v = new Vector(
-					Math.cos(Math.toRadians(yaw + 90)) * speed,
-					Math.sin(Math.toRadians(-pitch)) * speed,
-					Math.sin(Math.toRadians(yaw + 90)) * speed
-			);
-			p.launchProjectile(Snowball.class, v);
+					Math.cos(Math.toRadians(yaw + 90)),
+					Math.sin(Math.toRadians(-pitch)),
+					Math.sin(Math.toRadians(yaw + 90))
+			).multiply(gun.getSpeed());
+			p.launchProjectile(Arrow.class, v);
+			p.playSound(p.getLocation(), Sound.FIREWORK_BLAST, 5, 0);
 		}
 
 	}

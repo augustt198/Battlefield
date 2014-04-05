@@ -1,11 +1,11 @@
 package me.august.battlefield.guns;
 
-public class GunRounds {
+public class GunAmmo implements Cloneable {
 
 	private int magazines;
 	private int bullets;
 
-	public GunRounds(int magazines, int bullets) {
+	public GunAmmo(int magazines, int bullets) {
 		this.magazines = magazines;
 		this.bullets = bullets;
 	}
@@ -16,6 +16,11 @@ public class GunRounds {
 
 	public int getBullets() {
 		return bullets;
+	}
+
+	@Override
+	public GunAmmo clone() {
+		return new GunAmmo(magazines, bullets);
 	}
 
 }

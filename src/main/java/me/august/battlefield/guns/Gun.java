@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class Gun extends KitItem {
 
 	private ItemType type;
-	private GunRounds rounds;
+	private GunAmmo ammo;
 	private int fireRate;
 	private double accuracy;
 	private double maxDamage;
@@ -19,7 +19,7 @@ public class Gun extends KitItem {
 	public Gun(String name, BattlefieldClass gunClass, Material material, ItemType type,  int magazines, int bullets,
 			   int fireRate, double accuracy, double maxDamage, int zoom, double speed) {
 		super(name, gunClass);
-		rounds = new GunRounds(magazines, bullets);
+		ammo = new GunAmmo(magazines, bullets);
 
 		this.material = material;
 		this.type = type;
@@ -65,6 +65,10 @@ public class Gun extends KitItem {
 
 	public ItemType getType() {
 		return type;
+	}
+
+	public GunAmmo getAmmo() {
+		return ammo;
 	}
 
 	@Override

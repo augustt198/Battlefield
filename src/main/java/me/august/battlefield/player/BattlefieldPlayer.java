@@ -2,6 +2,8 @@ package me.august.battlefield.player;
 
 import me.august.battlefield.BattlefieldClass;
 import me.august.battlefield.BattlefieldPlugin;
+import me.august.battlefield.guns.Gun;
+import me.august.battlefield.guns.GunAmmo;
 import me.august.battlefield.guns.ItemType;
 import me.august.battlefield.guns.KitItem;
 import me.august.battlefield.team.BattlefieldTeam;
@@ -35,6 +37,7 @@ public class BattlefieldPlayer implements Spawnable {
 	private BattlefieldClass battlefieldClass;
 	private BattlefieldTeam team;
 	private Map<ItemType, KitItem> loadout;
+	private Map<Gun, GunAmmo> ammo;
 	private Squad squad;
 	private boolean canDeploy;
 	private boolean deploying;
@@ -44,6 +47,7 @@ public class BattlefieldPlayer implements Spawnable {
 		this.player = new WeakReference<>(player);
 		battlefieldClass = BattlefieldClass.ASSAULT;
 		loadout = new HashMap<>();
+		ammo = new HashMap<>();
 		canDeploy = false;
 		deploying = false;
 		BattlefieldPlugin.getCurrentMatch().addPlayer(this);
@@ -132,6 +136,8 @@ public class BattlefieldPlayer implements Spawnable {
 		getPlayer().getInventory().clear();
 		deploying = true;
 
+		GunAmmo ammo = new GunAmmo(1, 1);
+
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -149,7 +155,7 @@ public class BattlefieldPlayer implements Spawnable {
 			new ItemAbility(spItem).undroppable().onLeftClick(new Runnable() {
 				@Override
 				public void run() {
-					teleport(sp.getSpawn().getLocation());
+					visitSpawnpoint(sp);
 				}
 			}).onRightClick(new Runnable() {
 				@Override
@@ -193,6 +199,14 @@ public class BattlefieldPlayer implements Spawnable {
 		ItemAbility.remove(this, "menu");
 	}
 
+	private void visitSpawnpoint(SpawnPoint point) {
+		teleport(point.getSpawn().getLocation());
+		getPlayer().playSound(getLocation(), Sound.ENDERMAN_TELEPORT, 4, 0);
+
+	}
+
+
+
 	@SuppressWarnings("deprecated")
 	public void attemptDeploy() {
 		if(!canDeploy) {
@@ -216,6 +230,7 @@ public class BattlefieldPlayer implements Spawnable {
 			p.setHealth(20);
 			p.setSaturation(20);
 			p.setFoodLevel(20);
+			p.getInventory().clear();
 			addKitToInventory();
 
 			p.updateInventory();
@@ -254,6 +269,10 @@ public class BattlefieldPlayer implements Spawnable {
 
 	public Map<ItemType, KitItem> getLoadout() {
 		return loadout;
+	}
+
+	public Map<Gun, GunAmmo> getAmmo() {
+		return ammo;
 	}
 
 	/* Aliases */
