@@ -77,8 +77,9 @@ public class BattlefieldTeam implements Spawnable {
 
 	public void addPlayer(BattlefieldPlayer player) {
 		player.sendMessage(ChatColor.AQUA + "You have joined " + getName());
+		String tabName = ("" + ChatColor.RESET + color + player.getName() + ChatColor.RESET).substring(0, 16);
 		player.getPlayer().setDisplayName("" + ChatColor.RESET + color + player.getName() + ChatColor.RESET);
-		player.getPlayer().setPlayerListName("" + ChatColor.RESET + color + player.getName() + ChatColor.RESET);
+		player.getPlayer().setPlayerListName(tabName);
 		player.setTeam(this);
 		player.launchDeployScreen(2);
 	}
